@@ -6,9 +6,9 @@ import static ru.nsu.basargina.HeapSort.heapsort;
 
 import java.util.Arrays;
 import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
+/** Class with tests */
 public class HeapSortTest {
     @Test
     void test_regular() {
@@ -69,16 +69,28 @@ public class HeapSortTest {
     @Test
     void test_time_complexity() {
         Random random = new Random();
+        double C_nlogn = 0; // constant
 
-        int[] arr = new int[100000]; // generate array and fill it with random numbers
-        Arrays.fill(arr, random.nextInt());
+        int initLen = 1000000;
+        for (int len = initLen; len <= initLen * 9; len *= 3) {
+            int[] arr = new int[len]; // generate array and fill it with random numbers
+            Arrays.fill(arr, random.nextInt());
 
-        long start = System.nanoTime();
-        heapsort(arr);
-        long finish = System.nanoTime();
+            long start = System.nanoTime();
+            heapsort(arr);
+            long finish = System.nanoTime();
+            long timeTaken = (finish - start) / 1000000; // time in miliseconds
 
-        long timeTaken = finish - start;
+            double Op_nlogn = len * Math.log(len); // quantity of operations
 
-        assertTrue(timeTaken < 1000000000);
+            if(len == 1000000) {
+                C_nlogn = Op_nlogn / timeTaken;
+            }
+
+            double timeExpected = Op_nlogn / C_nlogn;
+
+            assertTrue(timeTaken <= timeExpected);
+            System.out.printf("Array size: %d, actual time: %d, expected time: %f", len, timeTaken, timeExpected);
+        }
     }
 }

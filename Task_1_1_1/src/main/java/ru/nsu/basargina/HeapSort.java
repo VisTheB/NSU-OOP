@@ -37,8 +37,8 @@ public class HeapSort {
      */
     private static void heapify(int[] arr, int n, int i) {
 
-        int l = 2*i + 1; // left node
-        int r = 2*i +2; // right node
+        int l = 2 * i + 1; // left node
+        int r = 2 * i + 2; // right node
         int max = i;
 
         if (l < n && arr[l] > arr[max]) {
