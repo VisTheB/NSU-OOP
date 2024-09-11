@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
-/** Class with tests */
+/** Class with tests. */
 public class HeapSortTest {
     @Test
     void test_regular() {
@@ -69,7 +69,7 @@ public class HeapSortTest {
     @Test
     void test_time_complexity() {
         Random random = new Random();
-        double C_nlogn = 0; // constant
+        double constNlogN = 0; // constant
 
         int initLen = 1000000;
         for (int len = initLen; len <= initLen * 9; len *= 3) {
@@ -81,16 +81,18 @@ public class HeapSortTest {
             long finish = System.nanoTime();
             long timeTaken = (finish - start) / 1000000; // time in miliseconds
 
-            double Op_nlogn = len * Math.log(len); // quantity of operations
+            double opNlogN = len * Math.log(len); // quantity of operations
 
-            if(len == 1000000) {
-                C_nlogn = Op_nlogn / timeTaken;
+            if (len == 1000000) {
+                constNlogN = opNlogN / timeTaken;
             }
 
-            double timeExpected = Op_nlogn / C_nlogn;
+            double timeExpected = opNlogN / constNlogN;
 
             assertTrue(timeTaken <= timeExpected);
-            System.out.printf("Array size: %d, actual time: %d, expected time: %f", len, timeTaken, timeExpected);
+            System.out.printf(
+                    "Array size: %d, actual time: %d, expected time: %f",
+                    len, timeTaken, timeExpected);
         }
     }
 }
