@@ -83,7 +83,7 @@ public class HeapSortTest {
 
             double opNlogN = len * Math.log(len); // quantity of operations
 
-            if (len == 1000000) {
+            if (len == initLen) {
                 constNlogN = opNlogN / timeTaken;
             }
 
