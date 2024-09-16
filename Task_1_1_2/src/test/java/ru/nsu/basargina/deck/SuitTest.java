@@ -1,7 +1,8 @@
 package ru.nsu.basargina.deck;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class with suit tests.
