@@ -4,15 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Deck;
 import ru.nsu.basargina.deck.Rank;
+import org.junit.jupiter.api.Test;
 import ru.nsu.basargina.deck.Suit;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -79,8 +76,10 @@ class HumanTest {
         human.printHumanHand();
 
         String output = outputStream.toString();
+        String expectedOutput = "Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n";
 
-        assertTrue("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n".equals(output));
+        boolean isEqual = expectedOutput.equals(output);
+        assertTrue(isEqual);
 
         // Restore the standard output
         System.setOut(originalOut);

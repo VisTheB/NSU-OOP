@@ -2,13 +2,11 @@ package ru.nsu.basargina.players;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Rank;
-import ru.nsu.basargina.deck.Suit;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.nsu.basargina.deck.Suit;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,8 +47,10 @@ class DealerTest {
         dealer.printDealerHand(false);
 
         String output = outputStream.toString();
+        String expectedOutput = "Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n";
 
-        assertTrue("Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n".equals(output));
+        boolean isEqual = expectedOutput.equals(output);
+        assertTrue(isEqual);
 
         // Restore the standard output
         System.setOut(originalOut);
