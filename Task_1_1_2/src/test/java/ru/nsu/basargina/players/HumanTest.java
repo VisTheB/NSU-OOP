@@ -14,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -81,9 +80,7 @@ class HumanTest {
 
         String output = outputStream.toString();
 
-        String expectedOutput = "Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n";
-
-        assertEquals(expectedOutput, output);
+        assertEquals("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n", output);
 
         // Restore the standard output
         System.setOut(originalOut);
