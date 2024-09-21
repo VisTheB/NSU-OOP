@@ -26,6 +26,10 @@ public class Game {
      *  Start new game.
      */
     public Game() {
+        this(new Deck(true));
+    }
+
+    public Game(Deck deck) {
         winsCnt = 0;
         losesCnt = 0;
         tiesCnt = 0;
@@ -34,8 +38,8 @@ public class Game {
         dealer = new Dealer();
         human = new Human();
 
-        deck = new Deck(true);
-        droppedDeck = new Deck(false);
+        this.deck = deck;
+        this.droppedDeck = new Deck(false);
     }
 
     /**

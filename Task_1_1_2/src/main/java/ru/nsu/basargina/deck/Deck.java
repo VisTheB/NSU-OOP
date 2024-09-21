@@ -47,6 +47,15 @@ public class Deck {
     }
 
     /**
+     * Add card to the deck.
+     *
+     * @param card - card to be added
+     */
+    public void deckAddCard(Card card) {
+        deck.add(card);
+    }
+
+    /**
      * Function that takes card from the top of deck.
      *
      * @return card

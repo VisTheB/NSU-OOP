@@ -71,4 +71,11 @@ class DeckTest {
         assertEquals(initSize + 51, deck.cardsLeftCnt());
         assertFalse(droppedDeck.hasCards(), "Dropped deck should be empty.");
     }
+
+    @Test
+    void testDeckAddCard() {
+        deck.clearDeck();
+        deck.deckAddCard(new Card(Suit.SPADE, Rank.FOUR));
+        assertEquals(1, deck.cardsLeftCnt());
+    }
 }

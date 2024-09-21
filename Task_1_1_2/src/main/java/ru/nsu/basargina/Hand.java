@@ -1,9 +1,8 @@
 package ru.nsu.basargina;
 
+import java.util.ArrayList;
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Deck;
-
-import java.util.ArrayList;
 
 /**
  * Class for player's and dealer's hands.
@@ -30,7 +29,7 @@ public class Hand {
     }
 
     /**
-     * Add card to the deck.
+     * Add card to the hand.
      *
      * @param card - card to be added
      */
