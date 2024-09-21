@@ -51,7 +51,8 @@ class DealerTest {
 
         String output = outputStream.toString();
 
-        assertEquals("Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n", output);
+        assertEquals("Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n", output,
+                "output should be correct");
 
         // Restore the standard output
         System.setOut(originalOut);

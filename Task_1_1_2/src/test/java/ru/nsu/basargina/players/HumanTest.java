@@ -80,7 +80,8 @@ class HumanTest {
 
         String output = outputStream.toString();
 
-        assertEquals("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n", output);
+        assertEquals("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n", output,
+                "output should be correct");
 
         // Restore the standard output
         System.setOut(originalOut);
