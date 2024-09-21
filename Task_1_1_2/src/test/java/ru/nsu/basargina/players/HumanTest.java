@@ -76,7 +76,7 @@ class HumanTest {
         human.printHumanHand();
 
         String output = outputStream.toString();
-        String expectedOutput = "Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n";
+        String expectedOutput = "Yours cards: [Ace Hearts (11), King Spades (10)] => 21\n";
 
         boolean isEqual = expectedOutput.equals(output);
         assertTrue(isEqual);

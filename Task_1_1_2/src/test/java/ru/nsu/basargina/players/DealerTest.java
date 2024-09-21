@@ -47,7 +47,7 @@ class DealerTest {
         dealer.printDealerHand(false);
 
         String output = outputStream.toString();
-        String expectedOutput = "Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n";
+        String expectedOutput = "Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\n";
 
         boolean isEqual = expectedOutput.equals(output);
         assertTrue(isEqual);
