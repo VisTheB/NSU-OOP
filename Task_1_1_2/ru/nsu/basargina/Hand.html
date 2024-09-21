@@ -121,20 +121,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#countHandSum()" class="member-name-link">countHandSum</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCard(ru.nsu.basargina.deck.Card)" class="member-name-link">addCard</a><wbr>(<a href="deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a>&nbsp;card)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Add card to the deck.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#countHandSum()" class="member-name-link">countHandSum</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Count card values in the hand and handle aces situations.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropHand(ru.nsu.basargina.deck.Deck)" class="member-name-link">dropHand</a><wbr>(<a href="deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropHand(ru.nsu.basargina.deck.Deck)" class="member-name-link">dropHand</a><wbr>(<a href="deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Drops cards from main deck to droppedDeck.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastCard()" class="member-name-link">getLastCard</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastCard()" class="member-name-link">getLastCard</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get last taken card.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handSize()" class="member-name-link">handSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns size of the hand.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showHand(boolean)" class="member-name-link">showHand</a><wbr>(boolean&nbsp;isClosed)</code></div>
@@ -190,6 +200,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="addCard(ru.nsu.basargina.deck.Card)">
+<h3>addCard</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCard</span><wbr><span class="parameters">(<a href="deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a>&nbsp;card)</span></div>
+<div class="block">Add card to the deck.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>card</code> - - card to be added</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getLastCard()">
 <h3>getLastCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a></span>&nbsp;<span class="element-name">getLastCard</span>()</div>
@@ -197,6 +218,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>last card</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="handSize()">
+<h3>handSize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">handSize</span>()</div>
+<div class="block">Returns size of the hand.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>hand size</dd>
 </dl>
 </section>
 </li>

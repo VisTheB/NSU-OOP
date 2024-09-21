@@ -127,7 +127,9 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#makeMove(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck,ru.nsu.basargina.players.Dealer)" class="member-name-link">makeMove</a><wbr>(<a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;deck,
  <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck,
  <a href="Dealer.html" title="class in ru.nsu.basargina.players">Dealer</a>&nbsp;dealer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Logic for human's move.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printHumanHand()" class="member-name-link">printHumanHand</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -138,7 +140,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-ru.nsu.basargina.players.Player">Methods inherited from class&nbsp;ru.nsu.basargina.players.<a href="Player.html" title="class in ru.nsu.basargina.players">Player</a></h3>
-<code><a href="Player.html#getPlayerHand()">getPlayerHand</a>, <a href="Player.html#hasBlackjack()">hasBlackjack</a>, <a href="Player.html#setPlayerName(java.lang.String)">setPlayerName</a>, <a href="Player.html#take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck,boolean,boolean)">take</a></code></div>
+<code><a href="Player.html#getPlayerHand()">getPlayerHand</a>, <a href="Player.html#hasBlackjack()">hasBlackjack</a>, <a href="Player.html#setDealerOrNot(boolean)">setDealerOrNot</a>, <a href="Player.html#setPlayerName(java.lang.String)">setPlayerName</a>, <a href="Player.html#take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck)">take</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -174,6 +176,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">makeMove</span><wbr><span class="parameters">(<a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;deck,
  <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck,
  <a href="Dealer.html" title="class in ru.nsu.basargina.players">Dealer</a>&nbsp;dealer)</span></div>
+<div class="block">Logic for human's move.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>deck</code> - - human's deck</dd>
+<dd><code>droppedDeck</code> - - deck with dropped cards</dd>
+<dd><code>dealer</code> - - used to print dealer's hand</dd>
+</dl>
 </section>
 </li>
 <li>

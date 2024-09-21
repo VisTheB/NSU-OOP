@@ -136,16 +136,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Checks if player has blackjack.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerName(java.lang.String)" class="member-name-link">setPlayerName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDealerOrNot(boolean)" class="member-name-link">setDealerOrNot</a><wbr>(boolean&nbsp;isDealer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets player's name.</div>
+<div class="block">Sets that player is a dealer or not.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck,boolean,boolean)" class="member-name-link">take</a><wbr>(<a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;deck,
- <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck,
- boolean&nbsp;isDealer,
- boolean&nbsp;isHasClosed)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerName(java.lang.String)" class="member-name-link">setPlayerName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets player's name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck)" class="member-name-link">take</a><wbr>(<a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;deck,
+ <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Make move - i.e.</div>
 </div>
 </div>
@@ -181,6 +184,17 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="setDealerOrNot(boolean)">
+<h3>setDealerOrNot</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDealerOrNot</span><wbr><span class="parameters">(boolean&nbsp;isDealer)</span></div>
+<div class="block">Sets that player is a dealer or not.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>isDealer</code> - - is dealer or not</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setPlayerName(java.lang.String)">
 <h3>setPlayerName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayerName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
@@ -214,12 +228,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck,boolean,boolean)">
+<section class="detail" id="take(ru.nsu.basargina.deck.Deck,ru.nsu.basargina.deck.Deck)">
 <h3>take</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">take</span><wbr><span class="parameters">(<a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;deck,
- <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck,
- boolean&nbsp;isDealer,
- boolean&nbsp;isHasClosed)</span></div>
+ <a href="../deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a>&nbsp;droppedDeck)</span></div>
 <div class="block">Make move - i.e. take card from the deck to player's hand.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
