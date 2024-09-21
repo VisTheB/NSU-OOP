@@ -5,9 +5,9 @@ package ru.nsu.basargina.deck;
  */
 public enum Rank {
     ACE("Ace", 11),
-    JACK("Jack",10),
-    QUEEN("Queen",10),
-    KING("King",10),
+    JACK("Jack", 10),
+    QUEEN("Queen", 10),
+    KING("King", 10),
     TEN("Ten", 10),
     NINE("Nine", 9),
     EIGHT("Eight", 8),

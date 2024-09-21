@@ -12,6 +12,7 @@ public class Dealer extends Player {
     public Dealer() {
         super.setPlayerName("Dealer");
         hasClosed = true; // if dealer has a closed card
+        super.setDealerOrNot(true);
     }
 
     /**

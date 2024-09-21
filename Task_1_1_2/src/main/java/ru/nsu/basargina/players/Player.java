@@ -9,6 +9,7 @@ import ru.nsu.basargina.deck.Deck;
 public abstract class Player {
     private Hand hand;
     private String playerName;
+    private boolean isDealer;
 
     /**
      * Create a new player.
@@ -16,6 +17,16 @@ public abstract class Player {
     public Player() {
         this.hand = new Hand();
         this.playerName = "";
+        this.isDealer = false;
+    }
+
+    /**
+     * Sets that player is a dealer or not.
+     * 
+     * @param isDealer - is dealer or not
+     */
+    public void setDealerOrNot(boolean isDealer) {
+        this.isDealer = isDealer;
     }
 
     /**
@@ -51,25 +62,27 @@ public abstract class Player {
      * @param deck - deck
      * @param droppedDeck - deck with dropped cards
      */
-    public void take(Deck deck, Deck droppedDeck, boolean isDealer, boolean isHasClosed) {
+    public void take(Deck deck, Deck droppedDeck) {
         if (!deck.hasCards()) {
             deck.remakeDeck(droppedDeck);
         }
 
-
-        if (isDealer) {
-            if (isHasClosed) {
-                System.out.println("Dealer opens closed card " + this.hand.getLastCard().getStringCard());
-                Dealer dealer = (Dealer) this;
+        if (this.isDealer) {
+            Dealer dealer = (Dealer) this;
+            if (dealer.ifHasClosed()) {
+                String playerLastCard = this.hand.getLastCard().getStringCard();
+                System.out.println("Dealer opens closed card " + playerLastCard);
                 dealer.setDealerClosedCard(false);
 
             } else {
                 this.hand.takeCard(deck);
-                System.out.println("Dealer opens card " + this.hand.getLastCard().getStringCard());
+                String playerLastCard = this.hand.getLastCard().getStringCard();
+                System.out.println("Dealer opens card " + playerLastCard);
             }
         } else {
             this.hand.takeCard(deck);
-            System.out.println("You opened card " + this.hand.getLastCard().getStringCard());
+            String playerLastCard = this.hand.getLastCard().getStringCard();
+            System.out.println("You opened card " + playerLastCard);
         }
     }
 }

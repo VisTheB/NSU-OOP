@@ -1,8 +1,7 @@
 package ru.nsu.basargina.players;
 
-import ru.nsu.basargina.deck.Deck;
-
 import java.util.Scanner;
+import ru.nsu.basargina.deck.Deck;
 
 /**
  * Class for the human player from Player.
@@ -17,6 +16,13 @@ public class Human extends Player {
         super.setPlayerName("You");
     }
 
+    /**
+     * Logic for human's move.
+     *
+     * @param deck - human's deck
+     * @param droppedDeck - deck with dropped cards
+     * @param dealer - used to print dealer's hand
+     */
     public void makeMove(Deck deck, Deck droppedDeck, Dealer dealer) {
         int move;
 
@@ -26,14 +32,13 @@ public class Human extends Player {
 
         if (move == 1) {
 
-            this.take(deck, droppedDeck, false, false); // take card
+            this.take(deck, droppedDeck); // take card
             printHumanHand();
             dealer.printDealerHand(dealer.ifHasClosed());
 
-            if(this.getPlayerHand().countHandSum() >= 21) {
+            if (this.getPlayerHand().countHandSum() >= 21) {
                 return;
-            }
-            else {
+            } else {
                 this.makeMove(deck, droppedDeck, dealer);
             }
         } else {
@@ -45,6 +50,6 @@ public class Human extends Player {
      * Prints human's hand.
      */
     public void printHumanHand() {
-        System.out.println("Your's cards: " + super.getPlayerHand().showHand(false));
+        System.out.println("Yours cards: " + super.getPlayerHand().showHand(false));
     }
 }

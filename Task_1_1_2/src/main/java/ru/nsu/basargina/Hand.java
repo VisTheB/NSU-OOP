@@ -30,12 +30,30 @@ public class Hand {
     }
 
     /**
+     * Add card to the deck.
+     *
+     * @param card - card to be added
+     */
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    /**
      * Get last taken card.
      *
      * @return last card
      */
     public Card getLastCard() {
         return hand.getLast();
+    }
+
+    /**
+     * Returns size of the hand.
+     *
+     * @return hand size
+     */
+    public int handSize() {
+        return hand.size();
     }
 
     /**
@@ -58,17 +76,18 @@ public class Hand {
         int aceCount = 0;
         sumOfCardsValues = 0;
 
-        for (Card card: hand) {
+        for (Card card : hand) {
             sumOfCardsValues += card.getValue();
 
             if (card.getValue() == 11) {
-                aceCount ++;
+                aceCount++;
             }
         }
 
-        if (sumOfCardsValues > 21 && aceCount > 0) { // If there are > 0 aces and sum > 21, then set each ace to 1 until sum > 21
+        if (sumOfCardsValues > 21 && aceCount > 0) {
+            // If there are > 0 aces and sum > 21, then set each ace to 1 until sum > 21
             while (sumOfCardsValues > 21 && aceCount > 0) {
-                aceCount --;
+                aceCount--;
                 sumOfCardsValues -= 10;
             }
         }
@@ -91,7 +110,7 @@ public class Hand {
             }
             out += "<closed card>]";
         } else {
-            for (Card card: hand) {
+            for (Card card : hand) {
                 out += card.getStringCard() + ", ";
             }
 

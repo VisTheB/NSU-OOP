@@ -9,15 +9,18 @@ import ru.nsu.basargina.players.Human;
  */
 public class Game {
 
-    private Dealer dealer;
-    private Human human;
+    public Dealer dealer;
+    public Human human;
     private Deck deck;
-    private Deck droppedDeck; // a deck where used cards go
+    public Deck droppedDeck; // a deck where used cards go
 
-    private int winsCnt;
-    private int losesCnt;
+    public int winsCnt;
+    public int losesCnt;
     private int tiesCnt;
     private int roundCnt;
+    private final int blJackScore = 21;
+    private int dealerHandSum;
+    private int humanHandSum;
 
     /**
      *  Start new game.
@@ -33,14 +36,12 @@ public class Game {
 
         deck = new Deck(true);
         droppedDeck = new Deck(false);
-
-        startRound();
     }
 
     /**
      * Prints score in addition to "you won/lost ...".
      */
-    private void printScore() {
+    public void printScore() {
         System.out.print("Score " + winsCnt + ":" + losesCnt);
 
         if (winsCnt > losesCnt) {
@@ -55,16 +56,15 @@ public class Game {
     /**
      * Checks if players have blackjack.
      */
-    private void hasBlackJack() {
+    public void hasBlackJack() {
         if (dealer.hasBlackjack()) {
 
-            if(human.hasBlackjack()) {
+            if (human.hasBlackjack()) {
                 System.out.print("Both have 21. Tie! ");
                 printScore();
                 tiesCnt++;
                 startRound();
-            }
-            else {
+            } else {
                 System.out.print("You lost the round! ");
                 printScore();
                 losesCnt++;
@@ -72,7 +72,7 @@ public class Game {
             }
         }
 
-        if(human.hasBlackjack()) {
+        if (human.hasBlackjack()) {
             System.out.print("You won the round! ");
             printScore();
             winsCnt++;
@@ -84,20 +84,22 @@ public class Game {
      * Checks who won in the end of the round.
      */
     public void whoWonInTheRound() {
-        if (dealer.getPlayerHand().countHandSum() > 21) {
+
+        dealerHandSum = dealer.getPlayerHand().countHandSum();
+        humanHandSum = human.getPlayerHand().countHandSum();
+
+        if (dealerHandSum > blJackScore) {
             System.out.print("Dealer lost the round! ");
             winsCnt++;
-        }
-        else if (dealer.getPlayerHand().countHandSum() > human.getPlayerHand().countHandSum()) {
+        } else if (dealerHandSum > humanHandSum) {
             System.out.print("You lost the round! ");
             losesCnt++;
-        }
-        else if (human.getPlayerHand().countHandSum() > dealer.getPlayerHand().countHandSum()) {
+        } else if (humanHandSum > dealerHandSum) {
             System.out.print("You won the round! ");
             winsCnt++;
-        }
-        else {
+        } else {
             System.out.print("Both have 21. Tie! ");
+            tiesCnt++;
         }
 
         printScore();
@@ -108,7 +110,7 @@ public class Game {
     /**
      * Drops player's hands to droppedDeck in the beginning of each round.
      */
-    private void dropPlayersHands() {
+    public void dropPlayersHands() {
         if (winsCnt > 0 || losesCnt > 0 || tiesCnt > 0) {
 
             dealer.getPlayerHand().dropHand(droppedDeck);
@@ -123,7 +125,7 @@ public class Game {
     /**
      * Describes round logic.
      */
-    private void startRound() {
+    public void startRound() {
         dropPlayersHands();
         dealer.setDealerClosedCard(true);
 
@@ -145,11 +147,12 @@ public class Game {
         System.out.println("Your's turn\n" + "-------");
         human.makeMove(deck, droppedDeck, dealer);
 
-        if (human.getPlayerHand().countHandSum() > 21) { // if human gets more than 21 in total after all moves
+        // if human gets more than 21 in total after all moves
+        if (human.getPlayerHand().countHandSum() > blJackScore) {
             System.out.println("You lost the round! ");
             printScore();
 
-            losesCnt ++;
+            losesCnt++;
 
             startRound();
         }
@@ -157,7 +160,7 @@ public class Game {
         System.out.println("Dealer's turn\n" + "-------");
         while (dealer.getPlayerHand().countHandSum() < 17) {
 
-            dealer.take(deck, droppedDeck, true, dealer.ifHasClosed());
+            dealer.take(deck, droppedDeck);
 
             human.printHumanHand();
             dealer.printDealerHand(dealer.ifHasClosed());

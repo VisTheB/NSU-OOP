@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeEach;
 import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -68,7 +68,7 @@ class DeckTest {
         int initSize = deck.cardsLeftCnt();
         deck.remakeDeck(droppedDeck);
 
-        assertEquals(initSize + 51, deck.cardsLeftCnt(), "Deck should have cards added from dropped deck.");
+        assertEquals(initSize + 51, deck.cardsLeftCnt());
         assertFalse(droppedDeck.hasCards(), "Dropped deck should be empty.");
     }
 }
