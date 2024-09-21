@@ -39,6 +39,6 @@ public class Dealer extends Player {
     public void printDealerHand(boolean hasClosed) {
         String stringHand = super.getPlayerHand().showHand(hasClosed);
 
-        System.out.println("Dealers cards: " + stringHand);
+        System.out.println("Dealer cards: " + stringHand);
     }
 }
