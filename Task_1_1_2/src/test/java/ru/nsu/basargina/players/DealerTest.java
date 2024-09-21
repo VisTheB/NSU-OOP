@@ -1,18 +1,17 @@
 package ru.nsu.basargina.players;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Rank;
 import ru.nsu.basargina.deck.Suit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class with dealer methods tests.
@@ -51,8 +50,7 @@ class DealerTest {
 
         String output = outputStream.toString();
 
-        assertEquals("Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n", output,
-                "output should be correct");
+        assertTrue("Dealer cards: [Queen Diamonds (10), Three Hearts (3)] => 13\r\n".equals(output));
 
         // Restore the standard output
         System.setOut(originalOut);

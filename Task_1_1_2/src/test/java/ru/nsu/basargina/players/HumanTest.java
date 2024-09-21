@@ -1,20 +1,20 @@
 package ru.nsu.basargina.players;
 
-import ru.nsu.basargina.deck.Deck;
-import ru.nsu.basargina.deck.Card;
-import ru.nsu.basargina.deck.Rank;
-import ru.nsu.basargina.deck.Suit;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+import ru.nsu.basargina.deck.Card;
+import ru.nsu.basargina.deck.Deck;
+import ru.nsu.basargina.deck.Rank;
+import ru.nsu.basargina.deck.Suit;
+
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class with human methods tests.
@@ -27,7 +27,7 @@ class HumanTest {
     @Test
     void testMakeMoveInput1() {
         String input = "1\n0\n"; // choose '1' then '0' to stop
-        InputStream originalIn = System.in; // original input stream
+        final InputStream originalIn = System.in; // original input stream
 
         // Test input '1'
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -46,7 +46,7 @@ class HumanTest {
     @Test
     void testMakeMoveInput0() {
         String input = "0\n"; // choose '1' then '0' to stop
-        InputStream originalIn = System.in; // original input stream
+        final InputStream originalIn = System.in; // original input stream
 
         // Test input '0'
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -73,15 +73,14 @@ class HumanTest {
 
         // Redirect the standard output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
+        final PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
         human.printHumanHand();
 
         String output = outputStream.toString();
 
-        assertEquals("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n", output,
-                "output should be correct");
+        assertTrue("Yours cards: [Ace Hearts (11), King Spades (10)] => 21\r\n".equals(output));
 
         // Restore the standard output
         System.setOut(originalOut);
