@@ -27,7 +27,12 @@ public class Card {
         return rank.getRankName() + " " + suit.getSuitName() + " (" + this.getValue() + ")";
     }
 
+    /**
+     * Returns value of the card.
+     *
+     * @return card value
+     */
     public int getValue() {
-        return rank.rankValue;
+        return rank.getRankValue();
     }
 }

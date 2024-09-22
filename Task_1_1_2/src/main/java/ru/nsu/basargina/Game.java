@@ -11,13 +11,13 @@ import ru.nsu.basargina.players.Human;
 public class Game {
     Scanner inp = new Scanner(System.in);
 
-    public Dealer dealer;
-    public Human human;
-    private Deck deck;
-    public Deck droppedDeck; // a deck where used cards go
+    Dealer dealer;
+    Human human;
+    Deck deck;
+    Deck droppedDeck; // a deck where used cards go
 
-    public int winsCnt;
-    public int losesCnt;
+    int winsCnt;
+    int losesCnt;
     private int tiesCnt;
     private int roundCnt;
     private final int blJackScore = 21;
@@ -28,19 +28,15 @@ public class Game {
      *  Start new game.
      */
     public Game() {
-        this(new Deck(true));
-    }
-
-    public Game(Deck deck) {
         winsCnt = 0;
         losesCnt = 0;
         tiesCnt = 0;
         roundCnt = 0;
 
         dealer = new Dealer();
-        human = new Human();
+        human = new Human(inp);
 
-        this.deck = deck;
+        this.deck = new Deck(true);
         this.droppedDeck = new Deck(false);
     }
 

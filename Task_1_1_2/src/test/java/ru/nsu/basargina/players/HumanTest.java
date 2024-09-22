@@ -7,6 +7,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Deck;
@@ -31,7 +33,7 @@ class HumanTest {
         // Test input '1'
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-        human = new Human();
+        human = new Human(new Scanner(System.in));
         deck = new Deck(true);
         droppedDeck = new Deck(false);
 
@@ -50,7 +52,7 @@ class HumanTest {
         // Test input '0'
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-        human = new Human();
+        human = new Human(new Scanner(System.in));
         deck = new Deck(true);
         droppedDeck = new Deck(false);
 
@@ -63,7 +65,7 @@ class HumanTest {
 
     @Test
     void testPrintHumanHand() {
-        human = new Human();
+        human = new Human(new Scanner(System.in));
         deck = new Deck(true);
         droppedDeck = new Deck(false);
 
@@ -89,7 +91,7 @@ class HumanTest {
 
     @Test
     void testTake() {
-        human = new Human();
+        human = new Human(new Scanner(System.in));
         deck = new Deck(true);
         deck.clearDeck();
         deck.deckAddCard(new Card(Suit.DIAMOND, Rank.SEVEN));

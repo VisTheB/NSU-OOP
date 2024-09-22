@@ -9,7 +9,7 @@ public enum Suit {
     HEART("Hearts"),
     SPADE("Spades");
 
-    final String suitName;
+    private String suitName;
 
     /**
      * Create card's suit.

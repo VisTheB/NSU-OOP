@@ -135,4 +135,50 @@ class GameTest {
         assertEquals(0, game.human.getPlayerHand().handSize());
         assertTrue(game.droppedDeck.cardsLeftCnt() > 0);
     }
+
+    @Test
+    void testStartRound() {
+        String input = "2\n0\n3\n"; // choose '3' to end the game
+        originalIn = System.in; // original input stream
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        game = new Game();
+        game.deck.clearDeck();
+        game.deck.deckAddCard(new Card(Suit.DIAMOND, Rank.KING));
+        game.deck.deckAddCard(new Card(Suit.DIAMOND, Rank.TWO));
+        game.deck.deckAddCard(new Card(Suit.SPADE, Rank.QUEEN));
+        game.deck.deckAddCard(new Card(Suit.HEART, Rank.JACK));
+        game.deck.deckAddCard(new Card(Suit.CLUB, Rank.FIVE));
+
+        // Redirect the standard output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        game.startRound();
+
+        String output = outputStream.toString();
+        String expectedOut =
+                "Input: 2 to continue or enter: 3 to stop\n" +
+                "Round 1\n" + "Dealer dealt the cards\n" +
+                "Yours cards: [Queen Spades (10), Jack Hearts (10)] => 20\n" +
+                "Dealer cards: [King Diamonds (10), <closed card>]\n" +
+                "Your's turn\n" + "-------\n" +
+                "Input '1', to take a card, and '0', to stop...\n" + "0\n\n" +
+                "Dealer's turn\n" + "-------\n" +
+                "Dealer opens closed card Two Diamonds (2)\n" +
+                "Yours cards: [Queen Spades (10), Jack Hearts (10)] => 20\n" +
+                "Dealer cards: [King Diamonds (10), Two Diamonds (2)] => 12\n" +
+                "Dealer opens card Five Clubs (5)\n" +
+                "Yours cards: [Queen Spades (10), Jack Hearts (10)] => 20\n" +
+                "Dealer cards: [King Diamonds (10), Two Diamonds (2), Five Clubs (5)] => 17\n" +
+                "You won the round! " + "Score " + game.winsCnt +
+                ":" + game.losesCnt + " in your favor.\n" +
+                "Input: 2 to continue or enter: 3 to stop\n";
+
+        assertEquals(expectedOut, output);
+
+        System.setOut(originalOut); // Restore original output
+        System.setIn(originalIn); // Restore original input
+    }
 }

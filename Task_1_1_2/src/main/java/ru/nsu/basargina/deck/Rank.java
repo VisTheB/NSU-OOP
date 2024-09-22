@@ -18,8 +18,8 @@ public enum Rank {
     THREE("Three", 3),
     TWO("Two", 2);
 
-    final String rankName;
-    final int rankValue;
+    private String rankName;
+    private int rankValue;
 
     /**
      * Create card's rank.
@@ -40,4 +40,11 @@ public enum Rank {
     public String getRankName() {
         return rankName;
     }
+
+    /**
+     * Returns value of the rank.
+     *
+     * @return rank value
+     */
+    public int getRankValue() { return rankValue; }
 }

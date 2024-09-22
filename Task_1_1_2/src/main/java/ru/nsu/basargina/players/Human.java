@@ -7,13 +7,14 @@ import ru.nsu.basargina.deck.Deck;
  * Class for the human player from Player.
  */
 public class Human extends Player {
-    Scanner inp = new Scanner(System.in);
+    Scanner inp;
 
     /**
      * Create human player.
      */
-    public Human() {
+    public Human(Scanner inp) {
         super.setPlayerName("You");
+        this.inp = inp;
     }
 
     /**
