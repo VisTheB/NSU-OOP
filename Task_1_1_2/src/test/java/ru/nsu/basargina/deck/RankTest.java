@@ -19,9 +19,9 @@ class RankTest {
 
     @Test
     void testGetRankValue() {
-        assertEquals(11, Rank.ACE.rankValue);
-        assertEquals(10, Rank.KING.rankValue);
-        assertEquals(2, Rank.TWO.rankValue);
-        assertEquals(9, Rank.NINE.rankValue);
+        assertEquals(11, Rank.ACE.getRankValue());
+        assertEquals(10, Rank.KING.getRankValue());
+        assertEquals(2, Rank.TWO.getRankValue());
+        assertEquals(9, Rank.NINE.getRankValue());
     }
 }

@@ -52,7 +52,8 @@ class GameTest {
 
         String output = outputStream.toString();
 
-        assertEquals("You won the round! " + "Score " + game.winsCnt +
+        assertEquals("You won the round! " + "Score " + game.winsCnt
+                +
                 ":" + game.losesCnt + " in your favor.\n" +
                 "Input: 2 to continue or enter: 3 to stop\n", output);
 

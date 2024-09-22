@@ -46,5 +46,7 @@ public enum Rank {
      *
      * @return rank value
      */
-    public int getRankValue() { return rankValue; }
+    public int getRankValue() {
+        return rankValue;
+    }
 }

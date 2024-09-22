@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.nsu.basargina.deck.Deck;
 import ru.nsu.basargina.deck.Card;
+import ru.nsu.basargina.deck.Deck;
 import ru.nsu.basargina.deck.Rank;
 import ru.nsu.basargina.deck.Suit;
 

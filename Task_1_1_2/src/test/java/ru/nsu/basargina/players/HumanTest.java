@@ -8,7 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.Test;
 import ru.nsu.basargina.deck.Card;
 import ru.nsu.basargina.deck.Deck;
