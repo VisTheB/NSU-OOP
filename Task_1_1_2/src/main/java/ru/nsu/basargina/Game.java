@@ -1,5 +1,6 @@
 package ru.nsu.basargina;
 
+import java.util.Scanner;
 import ru.nsu.basargina.deck.Deck;
 import ru.nsu.basargina.players.Dealer;
 import ru.nsu.basargina.players.Human;
@@ -8,6 +9,7 @@ import ru.nsu.basargina.players.Human;
  * Class where game logic is described.
  */
 public class Game {
+    Scanner inp = new Scanner(System.in);
 
     public Dealer dealer;
     public Human human;
@@ -130,47 +132,53 @@ public class Game {
      * Describes round logic.
      */
     public void startRound() {
-        dropPlayersHands();
-        dealer.setDealerClosedCard(true);
+        int move; // Checks if you want to continue playing
+        System.out.println("Input: 2 to continue or enter: 3 to stop");
+        move = inp.nextInt();
+        if (move == 2) {
+            dropPlayersHands();
+            dealer.setDealerClosedCard(true);
 
-        roundCnt++;
-        System.out.println("Round " + roundCnt);
-        System.out.println("Dealer dealt the cards");
+            roundCnt++;
+            System.out.println("Round " + roundCnt);
+            System.out.println("Dealer dealt the cards");
 
-        dealer.getPlayerHand().takeCard(deck);
-        dealer.getPlayerHand().takeCard(deck);
+            dealer.getPlayerHand().takeCard(deck);
+            dealer.getPlayerHand().takeCard(deck);
 
-        human.getPlayerHand().takeCard(deck);
-        human.getPlayerHand().takeCard(deck);
-
-        human.printHumanHand();
-        dealer.printDealerHand(dealer.ifHasClosed());
-
-        hasBlackJack();
-
-        System.out.println("Your's turn\n" + "-------");
-        human.makeMove(deck, droppedDeck, dealer);
-
-        // if human gets more than 21 in total after all moves
-        if (human.getPlayerHand().countHandSum() > blJackScore) {
-            System.out.println("You lost the round! ");
-            printScore();
-
-            losesCnt++;
-
-            startRound();
-        }
-
-        System.out.println("Dealer's turn\n" + "-------");
-        while (dealer.getPlayerHand().countHandSum() < 17) {
-
-            dealer.take(deck, droppedDeck);
+            human.getPlayerHand().takeCard(deck);
+            human.getPlayerHand().takeCard(deck);
 
             human.printHumanHand();
             dealer.printDealerHand(dealer.ifHasClosed());
+
+            hasBlackJack();
+
+            System.out.println("Your's turn\n" + "-------");
+            human.makeMove(deck, droppedDeck, dealer);
+
+            // if human gets more than 21 in total after all moves
+            if (human.getPlayerHand().countHandSum() > blJackScore) {
+                System.out.println("You lost the round! ");
+                printScore();
+
+                losesCnt++;
+
+                startRound();
+            }
+
+            System.out.println("Dealer's turn\n" + "-------");
+            while (dealer.getPlayerHand().countHandSum() < 17) {
+
+                dealer.take(deck, droppedDeck);
+
+                human.printHumanHand();
+                dealer.printDealerHand(dealer.ifHasClosed());
+            }
+
+            whoWonInTheRound();
+        } else if (move == 3) {
+            return;
         }
-
-        whoWonInTheRound();
     }
-
 }
