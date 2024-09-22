@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="ru/nsu/basargina/deck/Rank.html#ACE" class="member-name-link">ACE</a> - Enum constant in enum class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Rank.html" title="enum class in ru.nsu.basargina.deck">Rank</a></dt>
@@ -90,8 +90,6 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
-<dt><a href="ru/nsu/basargina/Game.html#dealer" class="member-name-link">dealer</a> - Variable in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/basargina/players/Dealer.html" class="type-name-link" title="class in ru.nsu.basargina.players">Dealer</a> - Class in <a href="ru/nsu/basargina/players/package-summary.html">ru.nsu.basargina.players</a></dt>
 <dd>
 <div class="block">Class for the dealer from Player.</div>
@@ -118,8 +116,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Drops cards from main deck to droppedDeck.</div>
 </dd>
-<dt><a href="ru/nsu/basargina/Game.html#droppedDeck" class="member-name-link">droppedDeck</a> - Variable in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/basargina/Game.html#dropPlayersHands()" class="member-name-link">dropPlayersHands()</a> - Method in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
 <dd>
 <div class="block">Drops player's hands to droppedDeck in the beginning of each round.</div>
@@ -147,8 +143,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Start new game.</div>
 </dd>
-<dt><a href="ru/nsu/basargina/Game.html#%3Cinit%3E(ru.nsu.basargina.deck.Deck)" class="member-name-link">Game(Deck)</a> - Constructor for class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/basargina/deck/Deck.html#getCards()" class="member-name-link">getCards()</a> - Method in class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Deck.html" title="class in ru.nsu.basargina.deck">Deck</a></dt>
 <dd>
 <div class="block">Returns player's deck.</div>
@@ -165,6 +159,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns name of the rank.</div>
 </dd>
+<dt><a href="ru/nsu/basargina/deck/Rank.html#getRankValue()" class="member-name-link">getRankValue()</a> - Method in enum class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Rank.html" title="enum class in ru.nsu.basargina.deck">Rank</a></dt>
+<dd>
+<div class="block">Returns value of the rank.</div>
+</dd>
 <dt><a href="ru/nsu/basargina/deck/Card.html#getStringCard()" class="member-name-link">getStringCard()</a> - Method in class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a></dt>
 <dd>
 <div class="block">Creates string representation of the card.</div>
@@ -174,7 +172,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns name of the suit.</div>
 </dd>
 <dt><a href="ru/nsu/basargina/deck/Card.html#getValue()" class="member-name-link">getValue()</a> - Method in class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Card.html" title="class in ru.nsu.basargina.deck">Card</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns value of the card.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:H">H</h2>
 <dl class="index">
@@ -204,13 +204,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="ru/nsu/basargina/deck/Suit.html#HEART" class="member-name-link">HEART</a> - Enum constant in enum class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Suit.html" title="enum class in ru.nsu.basargina.deck">Suit</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/basargina/Game.html#human" class="member-name-link">human</a> - Variable in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/basargina/players/Human.html" class="type-name-link" title="class in ru.nsu.basargina.players">Human</a> - Class in <a href="ru/nsu/basargina/players/package-summary.html">ru.nsu.basargina.players</a></dt>
 <dd>
 <div class="block">Class for the human player from Player.</div>
 </dd>
-<dt><a href="ru/nsu/basargina/players/Human.html#%3Cinit%3E()" class="member-name-link">Human()</a> - Constructor for class ru.nsu.basargina.players.<a href="ru/nsu/basargina/players/Human.html" title="class in ru.nsu.basargina.players">Human</a></dt>
+<dt><a href="ru/nsu/basargina/players/Human.html#%3Cinit%3E(java.util.Scanner)" class="member-name-link">Human(Scanner)</a> - Constructor for class ru.nsu.basargina.players.<a href="ru/nsu/basargina/players/Human.html" title="class in ru.nsu.basargina.players">Human</a></dt>
 <dd>
 <div class="block">Create human player.</div>
 </dd>
@@ -230,11 +228,6 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:K">K</h2>
 <dl class="index">
 <dt><a href="ru/nsu/basargina/deck/Rank.html#KING" class="member-name-link">KING</a> - Enum constant in enum class ru.nsu.basargina.deck.<a href="ru/nsu/basargina/deck/Rank.html" title="enum class in ru.nsu.basargina.deck">Rank</a></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 class="title" id="I:L">L</h2>
-<dl class="index">
-<dt><a href="ru/nsu/basargina/Game.html#losesCnt" class="member-name-link">losesCnt</a> - Variable in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:M">M</h2>
@@ -385,10 +378,8 @@ the order they are declared.</div>
 <dd>
 <div class="block">Checks who won in the end of the round.</div>
 </dd>
-<dt><a href="ru/nsu/basargina/Game.html#winsCnt" class="member-name-link">winsCnt</a> - Variable in class ru.nsu.basargina.<a href="ru/nsu/basargina/Game.html" title="class in ru.nsu.basargina">Game</a></dt>
-<dd>&nbsp;</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 </div>
 </div>
 </body>
