@@ -26,8 +26,8 @@ public class Main {
 
         // differentiation
         System.out.println("Input the derivative of the variable:");
-        String DerivVar = scanner.nextLine();
-        System.out.println(e.derivative(DerivVar).print());
+        String derivVar = scanner.nextLine();
+        System.out.println(e.derivative(derivVar).print());
 
         // evaluation
         System.out.println("Input variables and their values in the format 'x=10; y=13' :");

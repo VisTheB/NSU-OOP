@@ -41,7 +41,9 @@ public class ExpressionParser {
      * @return true if charToEat is equal to ch
      */
     private boolean eat(int charToEat) {
-        while (ch == ' ') nextChar();
+        while (ch == ' ') {
+            nextChar();
+        }
 
         if (ch == charToEat) {
             nextChar();
@@ -53,14 +55,15 @@ public class ExpressionParser {
     /**
      * Starts the string parsing process.
      *
-     * @return parsed expression (like: new Mul(new Number(2),
-     * new Variable("x")))
+     * @return parsed expression (like: new Mul(new Number(2), new Variable("x")))
      */
     public Expression parse() {
         nextChar();
         Expression expr = parseExpression();
 
-        if (pos < input.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+        if (pos < input.length()) {
+            throw new RuntimeException("Unexpected: " + (char) ch);
+        }
         return expr;
     }
 
@@ -111,9 +114,13 @@ public class ExpressionParser {
      */
     private Expression parseFactor() {
         // unary plus
-        if (eat('+')) return parseFactor();
+        if (eat('+')) {
+            return parseFactor();
+        }
         // unary minus
-        if (eat('-')) return new Sub(new Number(0), parseFactor());
+        if (eat('-')) {
+            return new Sub(new Number(0), parseFactor());
+        }
 
         Expression factor;
         int startPos = this.pos; // fix start position
@@ -125,14 +132,18 @@ public class ExpressionParser {
 
         } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
 
-            while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+            while ((ch >= '0' && ch <= '9') || ch == '.') {
+                nextChar();
+            }
             // convert string number to integer
             int value = Integer.parseInt(input.substring(startPos, this.pos));
             factor = new Number(value);
 
         } else if (ch >= 'a' && ch <= 'z') { // variables
 
-            while (ch >= 'a' && ch <= 'z') nextChar();
+            while (ch >= 'a' && ch <= 'z') {
+                nextChar();
+            }
             String name = input.substring(startPos, this.pos);
             factor = new Variable(name);
 

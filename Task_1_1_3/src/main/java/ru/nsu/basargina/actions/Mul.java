@@ -38,7 +38,8 @@ public class Mul extends Expression {
      */
     public Expression derivative(String variable) {
         // (u*v)' = u'*v + u*v'
-        return new Add(new Mul(left.derivative(variable), right), new Mul(left, right.derivative(variable)));
+        return new Add(new Mul(left.derivative(variable), right),
+                new Mul(left, right.derivative(variable)));
     }
 
     /**

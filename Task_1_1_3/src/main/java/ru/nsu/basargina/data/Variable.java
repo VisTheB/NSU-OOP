@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Class that represents a variable.
  */
-public class Variable extends Expression{
+public class Variable extends Expression {
     private final String name;
 
     /**
