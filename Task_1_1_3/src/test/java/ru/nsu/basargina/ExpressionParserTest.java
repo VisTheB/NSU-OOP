@@ -26,7 +26,7 @@ class ExpressionParserTest {
 
         assertInstanceOf(Number.class, expression);
         assertEquals(42.0, expression.eval(new HashMap<>()));
-        assertEquals("42", expression.toString());
+        assertEquals("42.0", expression.toString());
     }
 
     @Test
