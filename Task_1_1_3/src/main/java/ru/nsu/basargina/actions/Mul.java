@@ -26,8 +26,8 @@ public class Mul extends Expression {
      *
      * @return string with '*'
      */
-    public String print() {
-        return "(" + left.print() + "*" + right.print() + ")";
+    public String toString() {
+        return "(" + left.toString() + "*" + right.toString() + ")";
     }
 
     /**

@@ -19,7 +19,7 @@ class DivTest {
         Expression right = new Number(-765);
         Div division = new Div(left, right);
 
-        String output = division.print();
+        String output = division.toString();
 
         assertEquals("(o/-765.0)", output);
     }
@@ -31,7 +31,7 @@ class DivTest {
         Div division = new Div(left, right);
 
         Expression derivative = division.derivative("s");
-        String output = derivative.print();
+        String output = derivative.toString();
 
         assertEquals("(((1.0*52.0)-(s*0.0))/(52.0*52.0))", output);
     }

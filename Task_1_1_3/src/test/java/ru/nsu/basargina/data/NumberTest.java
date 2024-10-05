@@ -13,7 +13,7 @@ class NumberTest {
     void testPrint() {
         Expression number = new Number(14675);
 
-        String output = number.print();
+        String output = number.toString();
 
         assertEquals("14675.0", output);
     }
@@ -23,7 +23,7 @@ class NumberTest {
         Expression number = new Number(777);
         Expression derivative = number.derivative("x");
 
-        String output = derivative.print();
+        String output = derivative.toString();
 
         assertEquals("0.0", output);
     }

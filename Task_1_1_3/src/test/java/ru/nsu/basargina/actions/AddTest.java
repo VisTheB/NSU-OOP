@@ -19,7 +19,7 @@ class AddTest {
         Expression right = new Variable("a");
         Add sum = new Add(left, right);
 
-        String output = sum.print();
+        String output = sum.toString();
 
         assertEquals("(666.0+a)", output);
     }
@@ -31,7 +31,7 @@ class AddTest {
         Add sum = new Add(left, right);
 
         Expression derivative = sum.derivative("f");
-        String output = derivative.print();
+        String output = derivative.toString();
 
         assertEquals("(1.0+0.0)", output);
     }

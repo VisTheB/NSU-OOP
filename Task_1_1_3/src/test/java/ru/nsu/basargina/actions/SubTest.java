@@ -19,7 +19,7 @@ class SubTest {
         Expression right = new Variable("i");
         Sub diff = new Sub(left, right);
 
-        String output = diff.print();
+        String output = diff.toString();
 
         assertEquals("(9999.0-i)", output);
     }
@@ -31,7 +31,7 @@ class SubTest {
         Sub diff = new Sub(left, right);
 
         Expression derivative = diff.derivative("b");
-        String output = derivative.print();
+        String output = derivative.toString();
 
         assertEquals("(1.0-0.0)", output);
     }

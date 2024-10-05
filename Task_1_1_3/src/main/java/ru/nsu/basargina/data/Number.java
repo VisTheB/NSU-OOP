@@ -22,7 +22,7 @@ public class Number extends Expression {
      *
      * @return string number
      */
-    public String print() {
+    public String toString() {
         return String.valueOf(value);
     }
 

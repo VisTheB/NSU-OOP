@@ -10,7 +10,7 @@ public abstract class Expression {
      * Printing an expression to a file/console.
      *
      */
-    public abstract String print();
+    public abstract String toString();
 
     /**
      * Differentiating expression by a given variable.

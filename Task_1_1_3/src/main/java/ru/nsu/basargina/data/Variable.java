@@ -22,7 +22,7 @@ public class Variable extends Expression {
      *
      * @return string variable
      */
-    public String print() {
+    public String toString() {
         return name;
     }
 
@@ -40,9 +40,13 @@ public class Variable extends Expression {
      * Assigning a value to a variable.
      *
      * @param variables - variables to be assigned
-     * @return - value of the variable
+     * @return - value of the variable or error if variable is missing
      */
     public double eval(Map<String, Double> variables) {
-        return variables.getOrDefault(name, 0.0);
+        if (variables.containsKey(name)) {
+            return variables.get(name);
+        } else {
+            throw new RuntimeException("You haven't assigned this variable: "+ name);
+        }
     }
 }

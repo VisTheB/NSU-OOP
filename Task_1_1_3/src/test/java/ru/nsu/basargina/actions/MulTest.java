@@ -19,7 +19,7 @@ class MulTest {
         Expression right = new Number(678);
         Mul multiplication = new Mul(left, right);
 
-        String output = multiplication.print();
+        String output = multiplication.toString();
 
         assertEquals("(v*678.0)", output);
     }
@@ -31,7 +31,7 @@ class MulTest {
         Mul multiplication = new Mul(left, right);
 
         Expression derivative = multiplication.derivative("l");
-        String output = derivative.print();
+        String output = derivative.toString();
 
         assertEquals("((1.0*202.0)+(l*0.0))", output);
     }

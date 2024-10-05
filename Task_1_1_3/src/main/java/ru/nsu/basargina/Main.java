@@ -22,12 +22,12 @@ public class Main {
         ExpressionParser parser = new ExpressionParser(userInput);
 
         Expression e = parser.parse();
-        System.out.println(e.print());
+        System.out.println(e.toString());
 
         // differentiation
         System.out.println("Input the derivative of the variable:");
         String derivVar = scanner.nextLine();
-        System.out.println(e.derivative(derivVar).print());
+        System.out.println(e.derivative(derivVar).toString());
 
         // evaluation
         System.out.println("Input variables and their values in the format 'x=10; y=13' :");

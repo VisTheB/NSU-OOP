@@ -26,8 +26,8 @@ public class Div extends Expression {
      *
      * @return string with '/'
      */
-    public String print() {
-        return "(" + left.print() + "/" + right.print() + ")";
+    public String toString() {
+        return "(" + left.toString() + "/" + right.toString() + ")";
     }
 
     /**
@@ -50,6 +50,11 @@ public class Div extends Expression {
      * @return - result of the evaluation
      */
     public double eval(Map<String, Double> variables) {
-        return left.eval(variables) / right.eval(variables);
+        double rightPart = right.eval(variables);
+        if (rightPart == 0.0) {
+            throw new RuntimeException("Division by zero!");
+        } else {
+            return left.eval(variables) / rightPart;
+        }
     }
 }
