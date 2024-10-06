@@ -65,7 +65,6 @@ class MainTest {
         String output = outputStream.toString();
         String expectedOut = "Input expression to parse:\n"
                 + "Unexpected: ?\n"
-                + "Unexpected: ?\n"
                 + "You entered incorrect expression!\n";
 
         assertEquals(expectedOut, output);
