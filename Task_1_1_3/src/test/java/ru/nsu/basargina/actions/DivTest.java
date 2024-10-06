@@ -1,6 +1,7 @@
 package ru.nsu.basargina.actions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,5 +49,17 @@ class DivTest {
         double result = division.eval(vars);
 
         assertEquals(2.0, result);
+    }
+
+    @Test
+    void testDivisionByZero() {
+        Expression left = new Number(100);
+        Expression right = new Number(0);
+        Div division = new Div(left, right);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            division.eval(new HashMap<>());
+        });
+        assertEquals("Division by zero!", exception.getMessage());
     }
 }

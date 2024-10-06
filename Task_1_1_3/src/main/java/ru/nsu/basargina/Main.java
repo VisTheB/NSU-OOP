@@ -43,7 +43,7 @@ public class Main {
      * @param input - user input
      * @return map with variables as keys and their values as values
      */
-    private static Map<String, Double> parseVariables(String input) {
+    static Map<String, Double> parseVariables(String input) {
         Map<String, Double> variables = new HashMap<>();
         String[] assignments = input.split(";");
 
