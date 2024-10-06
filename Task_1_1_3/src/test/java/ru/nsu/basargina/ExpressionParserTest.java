@@ -120,8 +120,7 @@ class ExpressionParserTest {
         Expression expression = parser.parse();
 
         String output = outputStream.toString();
-        String expectedOut = "Unexpected: ?\n"
-                + "Unexpected: ?\n";
+        String expectedOut = "Unexpected: ?\n";
 
         assertEquals(expectedOut, output);
         assertNull(expression);

@@ -46,7 +46,7 @@ public class Variable extends Expression {
         if (variables.containsKey(name)) {
             return variables.get(name);
         } else {
-            throw new RuntimeException("You haven't assigned this variable: "+ name);
+            throw new RuntimeException("You haven't assigned this variable: " + name);
         }
     }
 }
