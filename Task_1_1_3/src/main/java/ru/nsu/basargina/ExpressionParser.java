@@ -58,13 +58,19 @@ public class ExpressionParser {
      * @return parsed expression (like: new Mul(new Number(2), new Variable("x")))
      */
     public Expression parse() {
-        nextChar();
-        Expression expr = parseExpression();
+        try {
+            nextChar();
+            Expression expr = parseExpression();
 
-        if (pos < input.length()) {
-            throw new RuntimeException("Unexpected: " + (char) ch);
+            if (pos < input.length()) {
+                throw new Exception("Unexpected: " + (char) ch);
+            }
+            return expr;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        return expr;
+        return null;
     }
 
     /**
@@ -125,32 +131,38 @@ public class ExpressionParser {
         Expression factor;
         int startPos = this.pos; // fix start position
 
-        if (eat('(')) { // parentheses
+        try {
+            if (eat('(')) { // parentheses
 
-            factor = parseExpression(); // parse the expression in parentheses
-            eat(')');
+                factor = parseExpression(); // parse the expression in parentheses
+                eat(')');
 
-        } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+            } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
 
-            while ((ch >= '0' && ch <= '9') || ch == '.') {
-                nextChar();
+                while ((ch >= '0' && ch <= '9') || ch == '.') {
+                    nextChar();
+                }
+                // convert string number to integer
+                int value = Integer.parseInt(input.substring(startPos, this.pos));
+                factor = new Number(value);
+
+            } else if (ch >= 'a' && ch <= 'z') { // variables
+
+                while (ch >= 'a' && ch <= 'z') {
+                    nextChar();
+                }
+                String name = input.substring(startPos, this.pos);
+                factor = new Variable(name);
+
+            } else {
+                throw new Exception("Unexpected: " + (char) ch);
             }
-            // convert string number to integer
-            int value = Integer.parseInt(input.substring(startPos, this.pos));
-            factor = new Number(value);
 
-        } else if (ch >= 'a' && ch <= 'z') { // variables
+            return factor;
 
-            while (ch >= 'a' && ch <= 'z') {
-                nextChar();
-            }
-            String name = input.substring(startPos, this.pos);
-            factor = new Variable(name);
-
-        } else {
-            throw new RuntimeException("Unexpected: " + (char) ch);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-        return factor;
+        return null;
     }
 }

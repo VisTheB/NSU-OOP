@@ -15,26 +15,30 @@ public class Main {
      * @param args - isn't used
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Input expression to parse:");
-        String userInput = scanner.nextLine();
-        ExpressionParser parser = new ExpressionParser(userInput);
+            System.out.println("Input expression to parse:");
+            String userInput = scanner.nextLine();
+            ExpressionParser parser = new ExpressionParser(userInput);
 
-        Expression e = parser.parse();
-        System.out.println(e.toString());
+            Expression e = parser.parse();
+            System.out.println(e.toString());
 
-        // differentiation
-        System.out.println("Input the derivative of the variable:");
-        String derivVar = scanner.nextLine();
-        System.out.println(e.derivative(derivVar).toString());
+            // differentiation
+            System.out.println("Input the derivative of the variable:");
+            String derivVar = scanner.nextLine();
+            System.out.println(e.derivative(derivVar).toString());
 
-        // evaluation
-        System.out.println("Input variables and their values in the format 'x=10; y=13' :");
-        String variablesInput = scanner.nextLine();
+            // evaluation
+            System.out.println("Input variables and their values in the format 'x=10; y=13' :");
+            String variablesInput = scanner.nextLine();
 
-        Map<String, Double> variables = parseVariables(variablesInput);
-        System.out.println(e.eval(variables));
+            Map<String, Double> variables = parseVariables(variablesInput);
+            System.out.println(e.eval(variables));
+        } catch (NullPointerException e) {
+            System.out.println("You entered incorrect expression!");
+        }
     }
 
     /**

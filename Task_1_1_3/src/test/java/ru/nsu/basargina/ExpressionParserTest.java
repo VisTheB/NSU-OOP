@@ -2,8 +2,11 @@ package ru.nsu.basargina;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,8 @@ import ru.nsu.basargina.data.Variable;
  * Class with tests for ExpressionParser class.
  */
 class ExpressionParserTest {
+    PrintStream originalOut;
+
     @Test
     public void testParseNumber() {
         ExpressionParser parser = new ExpressionParser("42");
@@ -107,7 +112,20 @@ class ExpressionParserTest {
     public void testParseUnexpectedCharacter() {
         ExpressionParser parser = new ExpressionParser("3 + ?");
 
-        Exception exception = assertThrows(RuntimeException.class, parser::parse);
-        assertEquals("Unexpected: ?", exception.getMessage());
+        // Redirect the standard output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        Expression expression = parser.parse();
+
+        String output = outputStream.toString();
+        String expectedOut = "Unexpected: ?\n"
+                + "Unexpected: ?\n";
+
+        assertEquals(expectedOut, output);
+        assertNull(expression);
+
+        System.setOut(originalOut); // Restore original output
     }
 }

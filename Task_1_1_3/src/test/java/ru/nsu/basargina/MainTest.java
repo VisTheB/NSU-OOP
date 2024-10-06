@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -15,6 +17,12 @@ import org.junit.jupiter.api.Test;
 class MainTest {
     PrintStream originalOut;
     InputStream originalIn;
+
+    @AfterEach
+    void tearDown() {
+        System.setOut(originalOut); // Restore original output
+        System.setIn(originalIn); // Restore original input
+    }
 
     @Test
     void testMainMethods() {
@@ -39,9 +47,28 @@ class MainTest {
                 + "10.0\n";
 
         assertEquals(expectedOut, output);
+    }
 
-        System.setOut(originalOut); // Restore original output
-        System.setIn(originalIn); // Restore original input
+    @Test
+    void testIncorrectInput() {
+        String input = "(3+?)\n";
+        originalIn = System.in; // original input stream
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        // Redirect the standard output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        Main.main(new String[0]);
+
+        String output = outputStream.toString();
+        String expectedOut = "Input expression to parse:\n"
+                + "Unexpected: ?\n"
+                + "Unexpected: ?\n"
+                + "You entered incorrect expression!\n";
+
+        assertEquals(expectedOut, output);
     }
 
     @Test

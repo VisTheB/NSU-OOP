@@ -10,6 +10,7 @@ public abstract class Expression {
      * Printing an expression to a file/console.
      *
      */
+    @Override
     public abstract String toString();
 
     /**
