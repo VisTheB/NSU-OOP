@@ -56,15 +56,16 @@ public class GraphTest {
             "A, B, A, C"
     })
     void testRemoveEdge(String source1, String destination1, String source2, String destination2) {
+
         Vertex<String> s1 = new Vertex<>(source1);
         Vertex<String> d1 = new Vertex<>(destination1);
-        Vertex<String> s2 = new Vertex<>(source2);
-        Vertex<String> d2 = new Vertex<>(destination2);
-
         Edge<String> e1 = new Edge<>(s1, d1);
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
+
+        Vertex<String> s2 = new Vertex<>(source2);
+        Vertex<String> d2 = new Vertex<>(destination2);
         Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e2);
         adjacencyMatrixGraph.addEdge(e2);
@@ -106,15 +107,16 @@ public class GraphTest {
     })
     void testRemoveVertex(String source1, String destination1,
                           String source2, String destination2) {
+
         Vertex<String> s1 = new Vertex<>(source1);
         Vertex<String> d1 = new Vertex<>(destination1);
-        Vertex<String> s2 = new Vertex<>(source2);
-        Vertex<String> d2 = new Vertex<>(destination2);
-
         Edge<String> e1 = new Edge<>(s1, d1);
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
+
+        Vertex<String> s2 = new Vertex<>(source2);
+        Vertex<String> d2 = new Vertex<>(destination2);
         Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e2);
         adjacencyMatrixGraph.addEdge(e2);

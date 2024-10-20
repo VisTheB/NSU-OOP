@@ -30,8 +30,8 @@ public class TopologicalSortTest {
         List<Vertex<Integer>> sortedList = TopologicalSort.sort(graph);
 
         assertTrue(
-                sortedList.equals(Arrays.asList(v1, v2, v3, v4)) ||
-                        sortedList.equals(Arrays.asList(v1, v3, v2, v4))
+                sortedList.equals(Arrays.asList(v1, v2, v3, v4))
+                        || sortedList.equals(Arrays.asList(v1, v3, v2, v4))
         );
     }
 
@@ -51,8 +51,8 @@ public class TopologicalSortTest {
             TopologicalSort.sort(graph);
         });
 
-        assertEquals("Graph contains cycles - topological sort is not possible."
-                , exception.getMessage());
+        assertEquals("Graph contains cycles - topological sort is not possible.",
+                exception.getMessage());
     }
 
     @Test
