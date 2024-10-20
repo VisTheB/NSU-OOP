@@ -62,10 +62,10 @@ public class GraphTest {
         Vertex<String> d2 = new Vertex<>(destination2);
 
         Edge<String> e1 = new Edge<>(s1, d1);
-        Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
+        Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e2);
         adjacencyMatrixGraph.addEdge(e2);
         incidenceMatrixGraph.addEdge(e2);
@@ -112,10 +112,10 @@ public class GraphTest {
         Vertex<String> d2 = new Vertex<>(destination2);
 
         Edge<String> e1 = new Edge<>(s1, d1);
-        Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
+        Edge<String> e2 = new Edge<>(s2, d2);
         adjacencyListGraph.addEdge(e2);
         adjacencyMatrixGraph.addEdge(e2);
         incidenceMatrixGraph.addEdge(e2);

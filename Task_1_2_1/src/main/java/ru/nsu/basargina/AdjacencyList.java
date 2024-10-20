@@ -158,7 +158,7 @@ class AdjacencyList<T> implements Graph<T> {
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            throw new Exception("Error reading from file");
+            throw new Exception("Error reading from file", e);
         }
     }
 
