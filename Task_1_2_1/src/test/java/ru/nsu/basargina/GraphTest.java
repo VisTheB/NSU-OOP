@@ -5,11 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
+import java.util.ArrayList;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Class with tests for 3 graph representations.
@@ -37,33 +35,46 @@ public class GraphTest {
             "B, D"
     })
     void testAddEdge(String source, String destination) {
-        adjacencyListGraph.addEdge(source, destination);
-        adjacencyMatrixGraph.addEdge(source, destination);
-        incidenceMatrixGraph.addEdge(source, destination);
+        Vertex<String> s = new Vertex<>(source);
+        Vertex<String> d = new Vertex<>(destination);
+        Edge<String> e = new Edge<>(s, d);
 
-        assertTrue(adjacencyListGraph.getNeighbors(source).contains(destination));
-        assertTrue(adjacencyMatrixGraph.getNeighbors(source).contains(destination));
-        assertTrue(incidenceMatrixGraph.getNeighbors(source).contains(destination));
+        adjacencyListGraph.addEdge(e);
+        adjacencyMatrixGraph.addEdge(e);
+        incidenceMatrixGraph.addEdge(e);
+
+        assertTrue(adjacencyListGraph.getNeighbors(s).contains(d));
+        assertTrue(adjacencyMatrixGraph.getNeighbors(s).contains(d));
+        assertTrue(incidenceMatrixGraph.getNeighbors(s).contains(d));
     }
 
     @ParameterizedTest
     @CsvSource({
-            "A, B",
-            "A, C",
-            "B, D"
+            "A, B, A, C"
     })
-    void testRemoveEdge(String source, String destination) {
-        adjacencyListGraph.addEdge(source, destination);
-        adjacencyMatrixGraph.addEdge(source, destination);
-        incidenceMatrixGraph.addEdge(source, destination);
+    void testRemoveEdge(String source1, String destination1, String source2, String destination2) {
+        Vertex<String> s1 = new Vertex<>(source1);
+        Vertex<String> d1 = new Vertex<>(destination1);
+        Edge<String> e1 = new Edge<>(s1, d1);
+        Vertex<String> s2 = new Vertex<>(source2);
+        Vertex<String> d2 = new Vertex<>(destination2);
+        Edge<String> e2 = new Edge<>(s2, d2);
 
-        adjacencyListGraph.removeEdge(source, destination);
-        adjacencyMatrixGraph.removeEdge(source, destination);
-        incidenceMatrixGraph.removeEdge(source, destination);
 
-        assertFalse(adjacencyListGraph.getNeighbors(source).contains(destination));
-        assertFalse(adjacencyMatrixGraph.getNeighbors(source).contains(destination));
-        assertFalse(incidenceMatrixGraph.getNeighbors(source).contains(destination));
+        adjacencyListGraph.addEdge(e1);
+        adjacencyMatrixGraph.addEdge(e1);
+        incidenceMatrixGraph.addEdge(e1);
+        adjacencyListGraph.addEdge(e2);
+        adjacencyMatrixGraph.addEdge(e2);
+        incidenceMatrixGraph.addEdge(e2);
+
+        adjacencyListGraph.removeEdge(e1);
+        adjacencyMatrixGraph.removeEdge(e1);
+        incidenceMatrixGraph.removeEdge(e1);
+
+        assertFalse(adjacencyListGraph.getNeighbors(s1).contains(d1));
+        assertFalse(adjacencyMatrixGraph.getNeighbors(s1).contains(d1));
+        assertFalse(incidenceMatrixGraph.getNeighbors(s1).contains(d1));
     }
 
     @ParameterizedTest
@@ -71,7 +82,10 @@ public class GraphTest {
             "A, B",
             "C, D"
     })
-    void testAddVertex(String vertex1, String vertex2) {
+    void testAddVertex(String v1, String v2) {
+        Vertex<String> vertex1 = new Vertex<>(v1);
+        Vertex<String> vertex2 = new Vertex<>(v2);
+
         adjacencyListGraph.addVertex(vertex1);
         adjacencyListGraph.addVertex(vertex2);
         adjacencyMatrixGraph.addVertex(vertex1);
@@ -86,21 +100,31 @@ public class GraphTest {
 
     @ParameterizedTest
     @CsvSource({
-            "A",
-            "B",
+            "A, B, A, C"
     })
-    void testRemoveVertex(String vertex) {
-        adjacencyListGraph.addVertex(vertex);
-        adjacencyMatrixGraph.addVertex(vertex);
-        incidenceMatrixGraph.addVertex(vertex);
+    void testRemoveVertex(String source1, String destination1, String source2, String destination2) {
+        Vertex<String> s1 = new Vertex<>(source1);
+        Vertex<String> d1 = new Vertex<>(destination1);
+        Edge<String> e1 = new Edge<>(s1, d1);
+        Vertex<String> s2 = new Vertex<>(source2);
+        Vertex<String> d2 = new Vertex<>(destination2);
+        Edge<String> e2 = new Edge<>(s2, d2);
 
-        adjacencyListGraph.removeVertex(vertex);
-        adjacencyMatrixGraph.removeVertex(vertex);
-        incidenceMatrixGraph.removeVertex(vertex);
 
-        assertEquals(0, adjacencyListGraph.getAllVertices().size());
-        assertEquals(0, adjacencyMatrixGraph.getAllVertices().size());
-        assertEquals(0, incidenceMatrixGraph.getAllVertices().size());
+        adjacencyListGraph.addEdge(e1);
+        adjacencyMatrixGraph.addEdge(e1);
+        incidenceMatrixGraph.addEdge(e1);
+        adjacencyListGraph.addEdge(e2);
+        adjacencyMatrixGraph.addEdge(e2);
+        incidenceMatrixGraph.addEdge(e2);
+
+        adjacencyListGraph.removeVertex(s1);
+        adjacencyMatrixGraph.removeVertex(s1);
+        incidenceMatrixGraph.removeVertex(s1);
+
+        assertEquals(2, adjacencyListGraph.getAllVertices().size());
+        assertEquals(2, adjacencyMatrixGraph.getAllVertices().size());
+        assertEquals(2, incidenceMatrixGraph.getAllVertices().size());
     }
 
     @ParameterizedTest
@@ -109,13 +133,17 @@ public class GraphTest {
             "A, C",
     })
     void testGetNeighbors(String source, String destination) {
-        adjacencyListGraph.addEdge(source, destination);
-        adjacencyMatrixGraph.addEdge(source, destination);
-        incidenceMatrixGraph.addEdge(source, destination);
+        Vertex<String> s = new Vertex<>(source);
+        Vertex<String> d = new Vertex<>(destination);
+        Edge<String> e = new Edge<>(s, d);
 
-        assertTrue(adjacencyListGraph.getNeighbors(source).contains(destination));
-        assertTrue(adjacencyMatrixGraph.getNeighbors(source).contains(destination));
-        assertTrue(incidenceMatrixGraph.getNeighbors(source).contains(destination));
+        adjacencyListGraph.addEdge(e);
+        adjacencyMatrixGraph.addEdge(e);
+        incidenceMatrixGraph.addEdge(e);
+
+        assertTrue(adjacencyListGraph.getNeighbors(s).contains(d));
+        assertTrue(adjacencyMatrixGraph.getNeighbors(s).contains(d));
+        assertTrue(incidenceMatrixGraph.getNeighbors(s).contains(d));
     }
 
     @ParameterizedTest
@@ -123,7 +151,10 @@ public class GraphTest {
             "A, B",
             "C, D",
     })
-    void testGetAllVertices(String vertex1, String vertex2) {
+    void testGetAllVertices(String v1, String v2) {
+        Vertex<String> vertex1 = new Vertex<>(v1);
+        Vertex<String> vertex2 = new Vertex<>(v2);
+
         adjacencyListGraph.addVertex(vertex1);
         adjacencyListGraph.addVertex(vertex2);
         adjacencyMatrixGraph.addVertex(vertex1);
@@ -131,7 +162,9 @@ public class GraphTest {
         incidenceMatrixGraph.addVertex(vertex1);
         incidenceMatrixGraph.addVertex(vertex2);
 
-        ArrayList<String> expected = new ArrayList<>(Arrays.asList(vertex1, vertex2));
+        ArrayList<Vertex<String>> expected = new ArrayList<>();
+        expected.add(vertex1);
+        expected.add(vertex2);
 
         assertEquals(expected, adjacencyListGraph.getAllVertices());
         assertEquals(expected, adjacencyMatrixGraph.getAllVertices());
@@ -142,24 +175,91 @@ public class GraphTest {
     @CsvSource({
             "testGraph1.txt"
     })
-    void testReadFromFile(String filename) throws IOException {
+    void testReadFromFile(String filename) throws Exception {
         adjacencyListGraph.readFromFile(filename);
         adjacencyMatrixGraph.readFromFile(filename);
         incidenceMatrixGraph.readFromFile(filename);
 
-        ArrayList<String> expectedVertexes = new ArrayList<>(Arrays.asList("A", "B", "C"));
-        ArrayList<String> expectedNeighbours = new ArrayList<>(Arrays.asList("B", "C"));
+        ArrayList<Vertex<String>> expectedVertexes = new ArrayList<>();
+        Vertex<String> a = new Vertex<>("A");
+        expectedVertexes.add(a);
+        expectedVertexes.add(new Vertex<>("B"));
+        expectedVertexes.add(new Vertex<>("C"));
+
+        ArrayList<Vertex<String>> expectedNeighbours = new ArrayList<>();
+        expectedNeighbours.add(new Vertex<>("B"));
+        expectedNeighbours.add(new Vertex<>("C"));
 
         assertEquals(3, adjacencyListGraph.getAllVertices().size());
         assertEquals(expectedVertexes, adjacencyListGraph.getAllVertices());
-        assertEquals(expectedNeighbours, adjacencyListGraph.getNeighbors("A"));
+        assertEquals(expectedNeighbours, adjacencyListGraph.getNeighbors(a));
 
         assertEquals(3, adjacencyMatrixGraph.getAllVertices().size());
         assertEquals(expectedVertexes, adjacencyMatrixGraph.getAllVertices());
-        assertEquals(expectedNeighbours, adjacencyMatrixGraph.getNeighbors("A"));
+        assertEquals(expectedNeighbours, adjacencyMatrixGraph.getNeighbors(a));
 
         assertEquals(3, incidenceMatrixGraph.getAllVertices().size());
         assertEquals(expectedVertexes, incidenceMatrixGraph.getAllVertices());
-        assertEquals(expectedNeighbours, incidenceMatrixGraph.getNeighbors("A"));
+        assertEquals(expectedNeighbours, incidenceMatrixGraph.getNeighbors(a));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "testGraph2.txt"
+    })
+    void testToStringNotDir(String filename) throws Exception {
+        adjacencyListGraph.readFromFile(filename);
+        adjacencyMatrixGraph.readFromFile(filename);
+        incidenceMatrixGraph.readFromFile(filename);
+
+        String expected1 = "A: [B, C]\nB: [A, C]\nC: [B, A]\n";
+        String expected2 = "A: [B, C]\nB: [A, C]\nC: [A, B]\n";
+
+        assertEquals(expected1, adjacencyListGraph.toString());
+        assertEquals(expected2, adjacencyMatrixGraph.toString());
+        assertEquals(expected1, incidenceMatrixGraph.toString());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "testGraph1.txt"
+    })
+    void testToStringDir(String filename) throws Exception {
+        adjacencyListGraph.readFromFile(filename);
+        adjacencyMatrixGraph.readFromFile(filename);
+        incidenceMatrixGraph.readFromFile(filename);
+
+        String expected = "A: [B, C]\nB: [C]\nC: []\n";
+
+        assertEquals(expected, adjacencyListGraph.toString());
+        assertEquals(expected, adjacencyMatrixGraph.toString());
+        assertEquals(expected, incidenceMatrixGraph.toString());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "testGraph12.txt"
+    })
+    void testException(String filename) {
+        try {
+            adjacencyListGraph.readFromFile(filename);
+        } catch (Exception e) {
+            String expected = "Error reading from file";
+            assertEquals(expected, e.getMessage());
+        }
+
+        try {
+            adjacencyMatrixGraph.readFromFile(filename);
+        } catch (Exception e) {
+            String expected = "Error reading from file";
+            assertEquals(expected, e.getMessage());
+        }
+
+        try {
+            incidenceMatrixGraph.readFromFile(filename);
+        } catch (Exception e) {
+            String expected = "Error reading from file";
+            assertEquals(expected, e.getMessage());
+        }
     }
 }

@@ -8,16 +8,22 @@ import java.util.List;
  * @param <T> - type of vertex name
  */
 public interface Graph<T> {
-    void addVertex(T vertex);
-    void removeVertex(T vertex);
-    void addEdge(T source, T destination);
-    void removeEdge(T source, T destination);
+    void addVertex(Vertex<T> vertex);
+
+    void removeVertex(Vertex<T> vertex);
+
+    void addEdge(Edge<T> edge);
+
+    void removeEdge(Edge<T> edge);
+
     void setDirected(boolean isDirected);
 
-    List<T> getNeighbors(T vertex);
-    List<T> getAllVertices();
+    List<Vertex<T>> getNeighbors(Vertex<T> vertex);
 
-    void readFromFile(String filename);
+    List<Vertex<T>> getAllVertices();
 
+    void readFromFile(String filename) throws Exception;
+
+    @Override
     String toString();
 }

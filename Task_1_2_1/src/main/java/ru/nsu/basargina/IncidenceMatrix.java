@@ -14,7 +14,7 @@ import java.util.Map;
  * @param <T> - type of vertex name
  */
 public class IncidenceMatrix<T> implements Graph<T> {
-    private Map<T, Integer> vertexMap;
+    private Map<Vertex<T>, Integer> vertexMap;
     private List<int[]> incidenceMatrix;
     private boolean isDirected;
     private int verticesTotal; // current vertex quantity in the graph
@@ -46,7 +46,7 @@ public class IncidenceMatrix<T> implements Graph<T> {
      * @param vertex - vertex to be added
      */
     @Override
-    public void addVertex(T vertex) {
+    public void addVertex(Vertex<T> vertex) {
         vertexMap.putIfAbsent(vertex, verticesTotal++);
     }
 
@@ -56,7 +56,7 @@ public class IncidenceMatrix<T> implements Graph<T> {
      * @param vertex - vertex to be removed
      */
     @Override
-    public void removeVertex(T vertex) {
+    public void removeVertex(Vertex<T> vertex) {
         if (vertexMap.containsKey(vertex)) {
             int index = vertexMap.get(vertex);
             vertexMap.remove(vertex);
@@ -71,21 +71,23 @@ public class IncidenceMatrix<T> implements Graph<T> {
     /**
      * Add edge to the graph.
      *
-     * @param source - start vertex
-     * @param destination - end vertex
+     * @param edge - edge to be added
      */
     @Override
-    public void addEdge(T source, T destination) {
-        addVertex(source);
-        addVertex(destination);
+    public void addEdge(Edge<T> edge) {
+        Vertex<T> s = edge.getSource();
+        Vertex<T> d = edge.getDestination();
+
+        addVertex(s);
+        addVertex(d);
 
         int[] edgeVector = new int[verticesTotal];
-        edgeVector[vertexMap.get(source)] = 1;
+        edgeVector[vertexMap.get(s)] = 1;
 
         if (this.isDirected) {
-            edgeVector[vertexMap.get(destination)] = -1;
+            edgeVector[vertexMap.get(d)] = -1;
         } else {
-            edgeVector[vertexMap.get(destination)] = 1;
+            edgeVector[vertexMap.get(d)] = 1;
         }
 
         edgesTotal++;
@@ -95,21 +97,23 @@ public class IncidenceMatrix<T> implements Graph<T> {
     /**
      * Remove edge from the graph.
      *
-     * @param source - start vertex
-     * @param destination - end vertex
+     * @param edge - edge to be removed
      */
     @Override
-    public void removeEdge(T source, T destination) {
-        if(vertexMap.containsKey(source) && vertexMap.containsKey(destination)) {
-            int sourceIndex = vertexMap.get(source);
-            int destIndex = vertexMap.get(destination);
+    public void removeEdge(Edge<T> edge) {
+        Vertex<T> s = edge.getSource();
+        Vertex<T> d = edge.getDestination();
+
+        if (vertexMap.containsKey(s) && vertexMap.containsKey(d)) {
+            int sourceIndex = vertexMap.get(s);
+            int destIndex = vertexMap.get(d);
 
             // Look for the edge that is incident to given vertexes
             for (int i = 0; i < edgesTotal; i++) {
-                int[] edge = incidenceMatrix.get(i);
+                int[] matEdge = incidenceMatrix.get(i);
 
-                boolean isEdgeToRemove = (this.isDirected && edge[sourceIndex] == 1 && edge[destIndex] == -1) ||
-                        (!this.isDirected && edge[sourceIndex] == 1 && edge[destIndex] == 1);
+                boolean isEdgeToRemove = (this.isDirected && matEdge[sourceIndex] == 1 && matEdge[destIndex] == -1)
+                        || (!this.isDirected && matEdge[sourceIndex] == 1 && matEdge[destIndex] == 1);
 
                 if (isEdgeToRemove) {
                     if (edgesTotal == 1) {
@@ -134,19 +138,25 @@ public class IncidenceMatrix<T> implements Graph<T> {
      * @return - list of neighboring vertices
      */
     @Override
-    public List<T> getNeighbors(T vertex) {
-        List<T> neighbors = new ArrayList<>();
+    public List<Vertex<T>> getNeighbors(Vertex<T> vertex) {
+        List<Vertex<T>> neighbors = new ArrayList<>();
 
         int vertexIndex = vertexMap.get(vertex);
 
         for (int[] edge : incidenceMatrix) {
             if (edge[vertexIndex] != 0) {
-                for (Map.Entry<T, Integer> entry : vertexMap.entrySet()) {
-                    T possibleNeighbor = entry.getKey();
+                for (Map.Entry<Vertex<T>, Integer> entry : vertexMap.entrySet()) {
+                    Vertex<T> possibleNeighbor = entry.getKey();
                     int neighborIndex = entry.getValue();
 
-                    if (edge[neighborIndex] != 0 && neighborIndex != vertexIndex) {
-                        neighbors.add(possibleNeighbor);
+                    if (!this.isDirected) {
+                        if (edge[neighborIndex] == 1 && neighborIndex != vertexIndex) {
+                            neighbors.add(possibleNeighbor);
+                        }
+                    } else {
+                        if (edge[neighborIndex] == -1 && neighborIndex != vertexIndex) {
+                            neighbors.add(possibleNeighbor);
+                        }
                     }
                 }
             }
@@ -161,7 +171,7 @@ public class IncidenceMatrix<T> implements Graph<T> {
      * @return list of all vertex names
      */
     @Override
-    public List<T> getAllVertices() {
+    public List<Vertex<T>> getAllVertices() {
         return new ArrayList<>(vertexMap.keySet());
     }
 
@@ -171,7 +181,7 @@ public class IncidenceMatrix<T> implements Graph<T> {
      * @param filename - file name
      */
     @Override
-    public void readFromFile(String filename) {
+    public void readFromFile(String filename) throws Exception {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
 
@@ -188,7 +198,7 @@ public class IncidenceMatrix<T> implements Graph<T> {
             // Reading vertices
             for (int i = 0; i < numberOfVertices; i++) {
                 line = br.readLine();
-                addVertex((T) line.trim());
+                addVertex(new Vertex<>((T) line.trim()));
             }
 
             // Reading edges number
@@ -200,11 +210,13 @@ public class IncidenceMatrix<T> implements Graph<T> {
                 line = br.readLine();
                 String[] vertices = line.trim().split(" ");
                 if (vertices.length == 2) {
-                    addEdge((T) vertices[0], (T) vertices[1]);
+                    Vertex<T> source = new Vertex<>((T) vertices[0]);
+                    Vertex<T> destination = new Vertex<>((T) vertices[1]);
+                    addEdge((new Edge<>(source, destination)));
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+            throw new Exception("Error reading from file");
         }
     }
 
@@ -216,13 +228,20 @@ public class IncidenceMatrix<T> implements Graph<T> {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
+        int neighboursCnt;
 
-        for (T vertex : vertexMap.keySet()) {
-            str.append(vertex).append(": ");
-            for (T neighbor : getNeighbors(vertex)) {
-                str.append(neighbor).append(" ");
+        for (Vertex<T> vertex : vertexMap.keySet()) {
+            neighboursCnt = 0;
+            str.append(vertex).append(": [");
+            for (Vertex<T> neighbor : getNeighbors(vertex)) {
+                neighboursCnt++;
+                str.append(neighbor).append(", ");
             }
-            str.append("\n");
+            int len = str.length();
+            if (neighboursCnt > 0) {
+                str.delete(len - 2, len); // delete last ", "
+            }
+            str.append("]\n");
         }
         return str.toString();
     }

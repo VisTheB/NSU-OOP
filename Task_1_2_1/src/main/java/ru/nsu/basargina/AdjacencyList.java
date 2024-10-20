@@ -14,7 +14,7 @@ import java.util.Map;
  * @param <T> - type of vertex name
  */
 class AdjacencyList<T> implements Graph<T> {
-    private Map<T, List<T>> adjacencyList;
+    private Map<Vertex<T>, List<Vertex<T>>> adjacencyList;
     private boolean isDirected;
 
     /**
@@ -40,7 +40,7 @@ class AdjacencyList<T> implements Graph<T> {
      * @param vertex - vertex to be added
      */
     @Override
-    public void addVertex(T vertex) {
+    public void addVertex(Vertex<T> vertex) {
         adjacencyList.putIfAbsent(vertex, new ArrayList<>());
     }
 
@@ -50,11 +50,11 @@ class AdjacencyList<T> implements Graph<T> {
      * @param vertex - vertex to be removed
      */
     @Override
-    public void removeVertex(T vertex) {
+    public void removeVertex(Vertex<T> vertex) {
         adjacencyList.remove(vertex);
-        
+
         // Delete vertex in other lists
-        for (List<T> neighbors : adjacencyList.values()) {
+        for (List<Vertex<T>> neighbors : adjacencyList.values()) {
             neighbors.remove(vertex);
         }
     }
@@ -62,33 +62,37 @@ class AdjacencyList<T> implements Graph<T> {
     /**
      * Add edge to the graph.
      *
-     * @param source - start vertex
-     * @param destination - end vertex
+     * @param edge - edge to be added
      */
     @Override
-    public void addEdge(T source, T destination) {
-        addVertex(source);
-        addVertex(destination);
+    public void addEdge(Edge<T> edge) {
+        Vertex<T> s = edge.getSource();
+        Vertex<T> d = edge.getDestination();
 
-        adjacencyList.get(source).add(destination);
+        addVertex(s);
+        addVertex(d);
+
+        adjacencyList.get(s).add(d);
 
         if (!isDirected) {
-            adjacencyList.get(destination).add(source);
+            adjacencyList.get(d).add(s);
         }
     }
 
     /**
      * Remove edge from the graph.
      *
-     * @param source - start vertex
-     * @param destination - end vertex
+     * @param edge - edge to be removed
      */
     @Override
-    public void removeEdge(T source, T destination) {
-        adjacencyList.get(source).remove(destination);
+    public void removeEdge(Edge<T> edge) {
+        Vertex<T> s = edge.getSource();
+        Vertex<T> d = edge.getDestination();
+
+        adjacencyList.get(s).remove(d);
 
         if (!isDirected) {
-            adjacencyList.get(destination).remove(source);
+            adjacencyList.get(d).remove(s);
         }
     }
 
@@ -99,7 +103,7 @@ class AdjacencyList<T> implements Graph<T> {
      * @return - list of neighboring vertices
      */
     @Override
-    public List<T> getNeighbors(T vertex) {
+    public List<Vertex<T>> getNeighbors(Vertex<T> vertex) {
         return adjacencyList.getOrDefault(vertex, new ArrayList<>());
     }
 
@@ -109,7 +113,7 @@ class AdjacencyList<T> implements Graph<T> {
      * @return list of all vertex names
      */
     @Override
-    public List<T> getAllVertices() {
+    public List<Vertex<T>> getAllVertices() {
         return new ArrayList<>(adjacencyList.keySet());
     }
 
@@ -119,10 +123,10 @@ class AdjacencyList<T> implements Graph<T> {
      * @param filename - file name
      */
     @Override
-    public void readFromFile(String filename) {
+    public void readFromFile(String filename) throws Exception {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
-                    
+
             String line;
 
             // Check if graph directed or not
@@ -136,7 +140,7 @@ class AdjacencyList<T> implements Graph<T> {
             // Reading vertices
             for (int i = 0; i < numberOfVertices; i++) {
                 line = br.readLine();
-                addVertex((T) line.trim());
+                addVertex(new Vertex<>((T) line.trim()));
             }
 
             // Reading edges number
@@ -148,11 +152,13 @@ class AdjacencyList<T> implements Graph<T> {
                 line = br.readLine();
                 String[] vertices = line.trim().split(" ");
                 if (vertices.length == 2) {
-                    addEdge((T) vertices[0], (T) vertices[1]);
+                    Vertex<T> source = new Vertex<>((T) vertices[0]);
+                    Vertex<T> destination = new Vertex<>((T) vertices[1]);
+                    addEdge((new Edge<>(source, destination)));
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+            throw new Exception("Error reading from file");
         }
     }
 
@@ -164,8 +170,8 @@ class AdjacencyList<T> implements Graph<T> {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        
-        for (T vertex : adjacencyList.keySet()) {
+
+        for (Vertex<T> vertex : adjacencyList.keySet()) {
             str.append(vertex).append(": ");
             str.append(adjacencyList.get(vertex));
             str.append("\n");
