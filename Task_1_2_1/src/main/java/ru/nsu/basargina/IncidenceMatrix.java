@@ -112,8 +112,10 @@ public class IncidenceMatrix<T> implements Graph<T> {
             for (int i = 0; i < edgesTotal; i++) {
                 int[] matEdge = incidenceMatrix.get(i);
 
-                boolean isEdgeToRemove = (this.isDirected && matEdge[sourceIndex] == 1 && matEdge[destIndex] == -1)
-                        || (!this.isDirected && matEdge[sourceIndex] == 1 && matEdge[destIndex] == 1);
+                boolean isEdgeToRemove = (this.isDirected && matEdge[sourceIndex] == 1
+                        && matEdge[destIndex] == -1)
+                        || (!this.isDirected && matEdge[sourceIndex] == 1
+                        && matEdge[destIndex] == 1);
 
                 if (isEdgeToRemove) {
                     if (edgesTotal == 1) {

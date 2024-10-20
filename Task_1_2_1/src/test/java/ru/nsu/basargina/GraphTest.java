@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
 import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,6 +17,9 @@ public class GraphTest {
     private Graph<String> adjacencyMatrixGraph;
     private Graph<String> incidenceMatrixGraph;
 
+    /**
+     * Set up 3 graph representations.
+     */
     @BeforeEach
     public void setUp() {
         adjacencyListGraph = new AdjacencyList<>();
@@ -55,12 +58,11 @@ public class GraphTest {
     void testRemoveEdge(String source1, String destination1, String source2, String destination2) {
         Vertex<String> s1 = new Vertex<>(source1);
         Vertex<String> d1 = new Vertex<>(destination1);
-        Edge<String> e1 = new Edge<>(s1, d1);
         Vertex<String> s2 = new Vertex<>(source2);
         Vertex<String> d2 = new Vertex<>(destination2);
+
+        Edge<String> e1 = new Edge<>(s1, d1);
         Edge<String> e2 = new Edge<>(s2, d2);
-
-
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
@@ -102,15 +104,15 @@ public class GraphTest {
     @CsvSource({
             "A, B, A, C"
     })
-    void testRemoveVertex(String source1, String destination1, String source2, String destination2) {
+    void testRemoveVertex(String source1, String destination1,
+                          String source2, String destination2) {
         Vertex<String> s1 = new Vertex<>(source1);
         Vertex<String> d1 = new Vertex<>(destination1);
-        Edge<String> e1 = new Edge<>(s1, d1);
         Vertex<String> s2 = new Vertex<>(source2);
         Vertex<String> d2 = new Vertex<>(destination2);
+
+        Edge<String> e1 = new Edge<>(s1, d1);
         Edge<String> e2 = new Edge<>(s2, d2);
-
-
         adjacencyListGraph.addEdge(e1);
         adjacencyMatrixGraph.addEdge(e1);
         incidenceMatrixGraph.addEdge(e1);
