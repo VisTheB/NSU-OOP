@@ -15,8 +15,8 @@ public class TopologicalSort {
      * Topological sort.
      *
      * @param graph - graph for sorting
-     * @return list of sorted vertexes
      * @param <T> - vertexes type
+     * @return list of sorted vertexes
      * @throws Exception if graph contains cycles
      */
     public static <T> List<Vertex<T>> sort(Graph<T> graph) throws Exception {
