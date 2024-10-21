@@ -32,11 +32,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B",
-            "A, C",
-            "B, D"
-    })
+    @CsvSource({"A, B", "A, C", "B, D"})
     void testAddEdge(String source, String destination) {
         Vertex<String> s = new Vertex<>(source);
         Vertex<String> d = new Vertex<>(destination);
@@ -52,9 +48,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B, A, C"
-    })
+    @CsvSource({"A, B, A, C"})
     void testRemoveEdge(String source1, String destination1, String source2, String destination2) {
 
         Vertex<String> s1 = new Vertex<>(source1);
@@ -81,10 +75,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B",
-            "C, D"
-    })
+    @CsvSource({"A, B", "C, D"})
     void testAddVertex(String v1, String v2) {
         Vertex<String> vertex1 = new Vertex<>(v1);
         Vertex<String> vertex2 = new Vertex<>(v2);
@@ -102,9 +93,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B, A, C"
-    })
+    @CsvSource({"A, B, A, C"})
     void testRemoveVertex(String source1, String destination1,
                           String source2, String destination2) {
 
@@ -132,10 +121,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B",
-            "A, C",
-    })
+    @CsvSource({"A, B", "A, C",})
     void testGetNeighbors(String source, String destination) {
         Vertex<String> s = new Vertex<>(source);
         Vertex<String> d = new Vertex<>(destination);
@@ -151,10 +137,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "A, B",
-            "C, D",
-    })
+    @CsvSource({"A, B", "C, D",})
     void testGetAllVertices(String v1, String v2) {
         Vertex<String> vertex1 = new Vertex<>(v1);
         Vertex<String> vertex2 = new Vertex<>(v2);
@@ -176,9 +159,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "testGraph1.txt"
-    })
+    @CsvSource({"testGraph1.txt"})
     void testReadFromFile(String filename) throws Exception {
         adjacencyListGraph.readFromFile(filename);
         adjacencyMatrixGraph.readFromFile(filename);
@@ -208,9 +189,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "testGraph2.txt"
-    })
+    @CsvSource({"testGraph2.txt"})
     void testToStringNotDir(String filename) throws Exception {
         adjacencyListGraph.readFromFile(filename);
         adjacencyMatrixGraph.readFromFile(filename);
@@ -225,9 +204,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "testGraph1.txt"
-    })
+    @CsvSource({"testGraph1.txt"})
     void testToStringDir(String filename) throws Exception {
         adjacencyListGraph.readFromFile(filename);
         adjacencyMatrixGraph.readFromFile(filename);
@@ -241,9 +218,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "testGraph12.txt"
-    })
+    @CsvSource({"testGraph12.txt"})
     void testException(String filename) {
         try {
             adjacencyListGraph.readFromFile(filename);
