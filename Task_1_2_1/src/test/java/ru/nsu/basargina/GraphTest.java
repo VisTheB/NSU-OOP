@@ -121,7 +121,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"A, B", "A, C",})
+    @CsvSource({"A, B", "A, C"})
     void testGetNeighbors(String source, String destination) {
         Vertex<String> s = new Vertex<>(source);
         Vertex<String> d = new Vertex<>(destination);
@@ -137,7 +137,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"A, B", "C, D",})
+    @CsvSource({"A, B", "C, D"})
     void testGetAllVertices(String v1, String v2) {
         Vertex<String> vertex1 = new Vertex<>(v1);
         Vertex<String> vertex2 = new Vertex<>(v2);
