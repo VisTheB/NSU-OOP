@@ -1,0 +1,9 @@
+true
+3
+A
+B
+C
+3
+A B
+B C
+A C
