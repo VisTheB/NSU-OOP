@@ -29,7 +29,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
         for (int i = 0; i < INIT_CAPACITY; i++) {
             table[i] = new ArrayList<>();
         }
-        
+
         this.tableSize = 0;
         this.modifCnt = 0;
     }
@@ -45,6 +45,24 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
     }
 
     /**
+     * Get table size (i.e. entries quantity).
+     *
+     * @return current size of the table.
+     */
+    public int getTableSize() {
+        return this.tableSize;
+    }
+
+    /**
+     * Get table length (i.e. buckets quantity).
+     *
+     * @return current length of the table
+     */
+    public int getTableLength() {
+        return table.length;
+    }
+
+    /**
      * Add "key: value" pair to the table.
      *
      * @param key key to be added
@@ -56,7 +74,6 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
         }
 
         int index = hash(key);
-        System.out.println(index);
         for (Entry<K, V> entry : table[index]) {
             if (entry.key.equals(key)) {
                 entry.value = value;
@@ -106,6 +123,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
 
     /**
      * Checks if table contains entry with key.
+     *
      * @param key key to be searched
      * @return true if contains
      */
@@ -141,7 +159,8 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
 
         for (List<Entry<K, V>> bucket : table) {
             for (Entry<K, V> entry : bucket) {
-                int index = (entry.key == null) ? 0 : Math.abs(entry.key.hashCode() % newTable.length);
+                int index = (entry.key == null) ? 0
+                        : Math.abs(entry.key.hashCode() % newTable.length);
                 newTable[index].add(entry);
             }
         }
@@ -217,23 +236,71 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
     }
 
     /**
-     * Compares two hash-tables.
+     * Compares current hash-table to given object.
      *
-     * @param other has-table for comparison
-     * @return true if tables are equal
+     * @param obj - object to be compared
+     * @return true if object is equal to current hash-table
      */
-    public boolean equals(HashTable<K, V> other) {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        HashTable<K, V> other = (HashTable<K, V>) obj;
+
         if (this.tableSize != other.tableSize) {
             return false;
         }
 
-        for (Entry<K, V> entry : this) {
-            if (!entry.value.equals(other.get(entry.key))) {
+        // Compare elements in buckets
+        for (int i = 0; i < this.table.length; i++) {
+            List<Entry<K, V>> thisBucket = this.table[i];
+            List<Entry<K, V>> otherBucket = other.table[i];
+
+            if (thisBucket.size() != otherBucket.size()) {
                 return false;
+            }
+
+            for (Entry<K, V> entry : thisBucket) {
+                // Find the same entry in otherBucket
+                boolean found = false;
+                for (Entry<K, V> otherEntry : otherBucket) {
+                    if (entry.key.equals(otherEntry.key) &&
+                            entry.value.equals(otherEntry.value)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Creates hash-table hash code.
+     *
+     * @return hash code for hash-table
+     */
+    @Override
+    public int hashCode() {
+        int result = 31; // this multiplier is usually used for hashCode
+        result += tableSize;
+
+        for (List<Entry<K, V>> bucket : table) {
+            for (Entry<K, V> entry : bucket) {
+                result = 31 * result + (entry.key != null ? entry.key.hashCode() : 0);
+                result = 31 * result + (entry.value != null ? entry.value.hashCode() : 0);
+            }
+        }
+
+        return result;
     }
 
     /**
