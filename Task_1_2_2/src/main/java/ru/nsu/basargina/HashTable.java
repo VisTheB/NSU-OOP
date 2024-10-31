@@ -270,13 +270,15 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
                 // Find the same entry in otherBucket
                 boolean found = false;
                 for (Entry<K, V> otherEntry : otherBucket) {
-                    if (entry.key.equals(otherEntry.key) &&
-                            entry.value.equals(otherEntry.value)) {
+                    if (entry.key.equals(otherEntry.key)
+                            && entry.value.equals(otherEntry.value)) {
                         found = true;
                         break;
                     }
                 }
-                if (!found) return false;
+                if (!found) {
+                    return false;
+                }
             }
         }
 

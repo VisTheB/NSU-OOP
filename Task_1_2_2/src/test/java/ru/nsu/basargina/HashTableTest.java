@@ -92,17 +92,16 @@ class HashTableTest {
 
     @Test
     public void testEquals() {
-        HashTable<String, Integer> anotherTable = new HashTable<>();
         hashTable.put("one", 1);
         hashTable.put("two", 2);
         hashTable.put("four", 4);
 
+        HashTable<String, Integer> anotherTable = new HashTable<>();
         anotherTable.put("one", 1);
         anotherTable.put("two", 2);
         anotherTable.put("four", 4);
 
         assertTrue(hashTable.equals(anotherTable));
-
         anotherTable.put("three", 3);
         assertFalse(hashTable.equals(anotherTable));
     }
