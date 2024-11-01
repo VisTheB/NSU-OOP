@@ -107,6 +107,20 @@ class HashTableTest {
     }
 
     @Test
+    public void testEqualsDiffTypes() {
+        hashTable.put("one", 1);
+        hashTable.put("two", 2);
+        hashTable.put("three", 3);
+
+        HashTable<Integer, Double> anotherTable = new HashTable<>();
+        anotherTable.put(11, 1.1);
+        anotherTable.put(22, 2.2);
+        anotherTable.put(33, 3.3);
+
+        assertFalse(hashTable.equals(anotherTable));
+    }
+
+    @Test
     public void testHashCode() {
         hashTable.put("one", 1);
         hashTable.put("two hundred", 2000);

@@ -251,7 +251,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
             return false;
         }
 
-        HashTable<K, V> other = (HashTable<K, V>) obj;
+        HashTable<?, ?> other = (HashTable<?, ?>) obj;
 
         if (this.tableSize != other.tableSize) {
             return false;
@@ -260,7 +260,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
         // Compare elements in buckets
         for (int i = 0; i < this.table.length; i++) {
             List<Entry<K, V>> thisBucket = this.table[i];
-            List<Entry<K, V>> otherBucket = other.table[i];
+            List<? extends Entry<?, ?>> otherBucket = other.table[i];
 
             if (thisBucket.size() != otherBucket.size()) {
                 return false;
@@ -269,7 +269,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
             for (Entry<K, V> entry : thisBucket) {
                 // Find the same entry in otherBucket
                 boolean found = false;
-                for (Entry<K, V> otherEntry : otherBucket) {
+                for (Entry<?, ?> otherEntry : otherBucket) {
                     if (entry.key.equals(otherEntry.key)
                             && entry.value.equals(otherEntry.value)) {
                         found = true;
