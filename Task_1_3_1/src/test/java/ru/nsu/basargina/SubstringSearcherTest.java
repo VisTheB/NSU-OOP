@@ -1,10 +1,9 @@
 package ru.nsu.basargina;
 
-import static ru.nsu.basargina.SubstringSearcher.findSubstringInFile;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.nsu.basargina.SubstringSearcher.findSubstringInFile;
 
 import java.io.File;
 import java.io.FileWriter;
