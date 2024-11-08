@@ -18,7 +18,8 @@ public class SubstringSearcher {
      * @return list of indexes of the beginning of each substring occurrence
      * @throws IOException if error during reading file occurred
      */
-    public static List<Integer> findSubstringInFile(String filename, String substring) throws IOException {
+    public static List<Integer> findSubstringInFile(String filename,
+                                                    String substring) throws IOException {
         List<Integer> resultIndices = new ArrayList<>();
         if (substring.isEmpty()) {
             return resultIndices;

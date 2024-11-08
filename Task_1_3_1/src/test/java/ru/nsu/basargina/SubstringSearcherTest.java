@@ -78,12 +78,12 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "abc";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
         List<Integer> expected = new ArrayList<>();
         expected.add(0);
         expected.add(3);
         expected.add(6);
 
+        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertFalse(results.isEmpty());
         assertEquals(expected, results);
     }
@@ -114,12 +114,11 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "Line 1";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
-
         List<Integer> expected = new ArrayList<>();
         expected.add(0);
         expected.add(14);
 
+        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertFalse(results.isEmpty());
         assertEquals(expected, results);
     }
