@@ -142,7 +142,7 @@ public class SubstringSearcherTest {
     @Test
     public void testLargeFile() throws Exception {
         File tempFile = File.createTempFile("largeTempFile", ".txt");
-        long targetSize = 1L * 1024 * 1024 * 1024;
+        long targetSize = 9L * 1024 * 1024 * 1024;
         String content = "The wondrous moment of our meeting.\n";
         String pattern = "lol";
         long currentSize = 0L;
