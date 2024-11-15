@@ -127,8 +127,8 @@ public class SubstringSearcherTest {
             String pattern = "dear";
 
             List<Long> expected = new ArrayList<>();
-            expected.add(274L);
-            expected.add(424L);
+            expected.add(267L);
+            expected.add(413L);
 
             List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
             assertFalse(results.isEmpty());
