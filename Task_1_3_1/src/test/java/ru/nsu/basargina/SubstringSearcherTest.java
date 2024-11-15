@@ -5,9 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.nsu.basargina.SubstringSearcher.findSubstringInFile;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -38,10 +41,10 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "test";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
-        List<Integer> expected = new ArrayList<>();
-        expected.add(10);
-        expected.add(23);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> expected = new ArrayList<>();
+        expected.add(10L);
+        expected.add(23L);
 
         assertFalse(results.isEmpty());
         assertEquals(expected, results);
@@ -53,10 +56,10 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "тест";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
-        List<Integer> expected = new ArrayList<>();
-        expected.add(4);
-        expected.add(38);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> expected = new ArrayList<>();
+        expected.add(4L);
+        expected.add(38L);
 
         assertFalse(results.isEmpty());
         assertEquals(expected, results);
@@ -68,7 +71,7 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "lollol";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertTrue(results.isEmpty());
     }
 
@@ -78,12 +81,12 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "abc";
 
-        List<Integer> expected = new ArrayList<>();
-        expected.add(0);
-        expected.add(3);
-        expected.add(6);
+        List<Long> expected = new ArrayList<>();
+        expected.add(0L);
+        expected.add(3L);
+        expected.add(6L);
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertFalse(results.isEmpty());
         assertEquals(expected, results);
     }
@@ -94,7 +97,7 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "hello";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertTrue(results.isEmpty());
     }
 
@@ -104,43 +107,69 @@ public class SubstringSearcherTest {
         File tempFile = createTempFile(content);
         String pattern = "";
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
         assertTrue(results.isEmpty());
     }
 
     @Test
     public void testSeveralLinesInText() throws Exception {
-        String content = "Line 1\nLine 2\nLine 1";
-        File tempFile = createTempFile(content);
-        String pattern = "Line 1";
+        InputStream in = getClass().getResourceAsStream("/test.txt");
+        File tempFile = File.createTempFile("tempFile", ".txt");
+        tempFile.deleteOnExit();
 
-        List<Integer> expected = new ArrayList<>();
-        expected.add(0);
-        expected.add(14);
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
-        assertFalse(results.isEmpty());
-        assertEquals(expected, results);
+            String pattern = "dear";
+
+            List<Long> expected = new ArrayList<>();
+            expected.add(274L);
+            expected.add(424L);
+
+            List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
+            assertFalse(results.isEmpty());
+            assertEquals(expected, results);
+
+        } catch (IOException e) {
+            throw new IOException("Error reading from file", e);
+        }
     }
 
     @Test
     public void testLargeFile() throws Exception {
         File tempFile = File.createTempFile("largeTempFile", ".txt");
-        long size = 10 * 1024 * 1024; // 10 MB
-        String content = "This is a test line. ";
-        String pattern = "line";
+        long targetSize = 1L * 1024 * 1024 * 1024;
+        String content = "The wondrous moment of our meeting.\n";
+        String pattern = "lol";
+        long currentSize = 0L;
 
-        try (FileWriter writer = new FileWriter(tempFile)) {
-            while (tempFile.length() < size) {
-                writer.write(content);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            StringBuilder sb = new StringBuilder();
+
+            writer.write("Hello lol name lol");
+            while (currentSize < targetSize) {
+                sb.append(content);
+                if (sb.length() >= 10 * 1024 * 1024) {
+                    writer.write(sb.toString());
+                    currentSize += sb.length();
+                    sb.setLength(0);
+                }
             }
+            writer.write(sb.toString());
+            currentSize += sb.length();
+        } catch (IOException e) {
+            throw new IOException("Error reading from file", e);
         }
 
         tempFile.deleteOnExit();
 
-        List<Integer> results = findSubstringInFile(tempFile.getPath(), pattern);
+        List<Long> results = findSubstringInFile(tempFile.getPath(), pattern);
+        long expectedOccurrences = 2L;
 
-        long expectedOccurrences = size / content.length() + 1;
         assertFalse(results.isEmpty());
         assertEquals(expectedOccurrences, results.size());
     }

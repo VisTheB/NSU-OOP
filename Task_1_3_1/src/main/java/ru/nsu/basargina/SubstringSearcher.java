@@ -18,31 +18,41 @@ public class SubstringSearcher {
      * @return list of indexes of the beginning of each substring occurrence
      * @throws IOException if error during reading file occurred
      */
-    public static List<Integer> findSubstringInFile(String filename,
-                                                    String substring) throws IOException {
-        List<Integer> resultIndices = new ArrayList<>();
+    public static List<Long> findSubstringInFile(String filename,
+                                                 String substring) throws IOException {
+        List<Long> resultIndices = new ArrayList<>();
         if (substring.isEmpty()) {
             return resultIndices;
         }
 
-        int index = 0;
-
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            StringBuilder str = new StringBuilder();
+            long index = 0;
+            char currentChar = 0;
 
-            int charRead;
-            while ((charRead = br.read()) != -1) {
-                char currentChar = (char) charRead;
-                str.append(currentChar);
+            ArrayList<Character> buff = new ArrayList<>();
 
-                if (str.length() > substring.length()) {
-                    str.deleteCharAt(0);
-                    index++;
+            for (int i = 0; i < substring.length(); i++) {
+                currentChar = (char) br.read();
+                buff.add(currentChar);
+            }
+
+            boolean cmpFlag;
+            while (currentChar != 65535) {
+                cmpFlag = true;
+                for (int i = 0; i < substring.length(); i++) {
+                    if (buff.get(i) != substring.charAt(i)) {
+                        cmpFlag = false;
+                        break;
+                    }
                 }
-
-                if (str.length() == substring.length() && str.toString().equals(substring)) {
+                if (cmpFlag) {
                     resultIndices.add(index);
                 }
+                index++;
+
+                buff.removeFirst();
+                currentChar = (char) br.read();
+                buff.add(currentChar);
             }
         } catch (IOException e) {
             throw new IOException("Error reading from file", e);
