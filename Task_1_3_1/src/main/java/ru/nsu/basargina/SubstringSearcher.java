@@ -1,8 +1,9 @@
 package ru.nsu.basargina;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,31 +14,31 @@ public class SubstringSearcher {
     /**
      * Method reads the file by chars and searches for substring occurrences.
      *
-     * @param filename - name of the file to read
+     * @param inputStream - input stream for reading
      * @param substring - substring to find
      * @return list of indexes of the beginning of each substring occurrence
      * @throws IOException if error during reading file occurred
      */
-    public static List<Long> findSubstringInFile(String filename,
+    public static List<Long> findSubstringInFile(InputStream inputStream,
                                                  String substring) throws IOException {
         List<Long> resultIndices = new ArrayList<>();
         if (substring.isEmpty()) {
             return resultIndices;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
             long index = 0;
-            char currentChar = 0;
+            int currentChar = 0;
 
             ArrayList<Character> buff = new ArrayList<>();
 
             for (int i = 0; i < substring.length(); i++) {
-                currentChar = (char) br.read();
-                buff.add(currentChar);
+                currentChar = isr.read();
+                buff.add((char) currentChar);
             }
 
             boolean cmpFlag;
-            while (currentChar != 65535) {
+            while (currentChar != -1) {
                 cmpFlag = true;
                 for (int i = 0; i < substring.length(); i++) {
                     if (buff.get(i) != substring.charAt(i)) {
@@ -51,8 +52,8 @@ public class SubstringSearcher {
                 index++;
 
                 buff.removeFirst();
-                currentChar = (char) br.read();
-                buff.add(currentChar);
+                currentChar = isr.read();
+                buff.add((char) currentChar);
             }
         } catch (IOException e) {
             throw new IOException("Error reading from file", e);
