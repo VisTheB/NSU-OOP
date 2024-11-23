@@ -19,7 +19,7 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanGetRedDiplomaAllFivesWithVKR() {
+    public void testCanGetRedDiplomaAllFivesWithVkr() {
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 1));
         student.addGrade(new Grade("Physics", 5, WorkType.EXAM, 3));
         student.addGrade(new Grade("Chemistry", 5, WorkType.DIFF_PASS, 2));

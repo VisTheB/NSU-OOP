@@ -57,9 +57,10 @@ public class RecordBook {
 
         // conditions for budget switch: no 2 or 3 for exam and diff_pass
         return lastTwoSessions.stream().noneMatch(
-                grade -> (grade.getScore() == 2 ||
-                         grade.isSatisfactory()) &&
-                        (grade.getType() == WorkType.EXAM || grade.getType() == WorkType.DIFF_PASS)
+                grade -> (grade.getScore() == 2
+                        || grade.isSatisfactory())
+                        && (grade.getType() == WorkType.EXAM
+                        || grade.getType() == WorkType.DIFF_PASS)
         );
     }
 
@@ -90,20 +91,20 @@ public class RecordBook {
         
         // checks if student doesn't have 3
         boolean noSatisfactoryMarks = grades.stream().noneMatch(grade ->
-                grade.isSatisfactory() && (grade.getType() == WorkType.EXAM || 
-                        grade.getType() == WorkType.DIFF_PASS));
+                grade.isSatisfactory() && (grade.getType() == WorkType.EXAM
+                        || grade.getType() == WorkType.DIFF_PASS));
 
         // how many % of fives student has
         double fivesPercentage = (grades.isEmpty()) ? 0 
                 : (fivesCnt / (double) grades.size()) * 100;
 
         // checks if student has 5 for vkr
-        boolean hasExcellentVKR = grades.stream()
+        boolean hasExcellentVkr = grades.stream()
                 .filter(grade -> grade.getType() == WorkType.VKR_DEFENSE)
                 .anyMatch(Grade::isFive);
 
         // for red diploma student must have >= 75 % fives, no 3 grades and 5 for vkr
-        return fivesPercentage >= 75 && noSatisfactoryMarks && hasExcellentVKR;
+        return fivesPercentage >= 75 && noSatisfactoryMarks && hasExcellentVkr;
     }
 
     /**
