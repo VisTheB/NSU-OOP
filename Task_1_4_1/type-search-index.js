@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.basargina","l":"Grade"},{"p":"ru.nsu.basargina","l":"Main"},{"p":"ru.nsu.basargina","l":"RecordBook"},{"p":"ru.nsu.basargina","l":"WorkType"}];updateSearchResults();
