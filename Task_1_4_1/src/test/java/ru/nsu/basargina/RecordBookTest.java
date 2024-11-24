@@ -19,38 +19,40 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanGetRedDiplomaAllFivesWithVkr() {
+    public void testCanGetRedDiplomaAllFivesWithVkr() throws Exception {
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 1));
-        student.addGrade(new Grade("Physics", 5, WorkType.EXAM, 3));
-        student.addGrade(new Grade("Chemistry", 5, WorkType.DIFF_PASS, 2));
+        student.addGrade(new Grade("Physics", 5, WorkType.EXAM, 8));
+        student.addGrade(new Grade("Chemistry", 4, WorkType.DIFF_PASS, 8));
+        student.addGrade(new Grade("AI", 5, WorkType.EXAM, 8));
         student.addGrade(new Grade("VKR", 5, WorkType.VKR_DEFENSE, 8));
 
         assertTrue(student.canGetRedDiploma());
     }
 
     @Test
-    public void testCanGetRedDiplomaWith3and2GradeInExam() {
+    public void testCanGetRedDiplomaWith3and2GradeInExam() throws Exception {
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 1));
-        student.addGrade(new Grade("Osi", 2, WorkType.EXAM, 4));
-        student.addGrade(new Grade("History", 2, WorkType.DIFF_PASS, 2));
+        student.addGrade(new Grade("Math2", 5, WorkType.EXAM, 8));
+        student.addGrade(new Grade("Osi", 2, WorkType.EXAM, 8));
+        student.addGrade(new Grade("History", 2, WorkType.DIFF_PASS, 8));
         student.addGrade(new Grade("VKR", 5, WorkType.VKR_DEFENSE, 8));
 
         assertFalse(student.canGetRedDiploma());
     }
 
     @Test
-    public void testCanGetRedDiplomaInsufficient5Grades() {
+    public void testCanGetRedDiplomaInsufficient5Grades() throws Exception {
         student.addGrade(new Grade("Math", 4, WorkType.EXAM, 1));
-        student.addGrade(new Grade("Biology", 4, WorkType.EXAM, 1));
-        student.addGrade(new Grade("OOP", 4, WorkType.EXAM, 4));
-        student.addGrade(new Grade("AI", 5, WorkType.DIFF_PASS, 3));
+        student.addGrade(new Grade("Biology", 4, WorkType.EXAM, 8));
+        student.addGrade(new Grade("OOP", 4, WorkType.EXAM, 8));
+        student.addGrade(new Grade("AI", 5, WorkType.DIFF_PASS, 8));
         student.addGrade(new Grade("VKR", 5, WorkType.VKR_DEFENSE, 8));
 
         assertFalse(student.canGetRedDiploma());
     }
 
     @Test
-    public void testCalculateAverageGrade() {
+    public void testCalculateAverageGrade() throws Exception {
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 1));
         student.addGrade(new Grade("Models", 4, WorkType.TEST, 5));
         student.addGrade(new Grade("Chemistry", 3, WorkType.COLLOQUIUM, 6));
@@ -73,7 +75,7 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanSwitchToBudget() {
+    public void testCanSwitchToBudget() throws Exception {
         student.addGrade(new Grade("Osi", 3, WorkType.EXAM, 2));
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 3));
         student.addGrade(new Grade("Physics", 4, WorkType.EXAM, 4));
@@ -83,7 +85,7 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanSwitchToBudgetWith3Grades() {
+    public void testCanSwitchToBudgetWith3Grades() throws Exception {
         student.addGrade(new Grade("Tvims", 4, WorkType.EXAM, 1));
         student.addGrade(new Grade("Math", 3, WorkType.EXAM, 2));
         student.addGrade(new Grade("Physics", 4, WorkType.EXAM, 2));
@@ -93,7 +95,7 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanGetIncreasedScholarship() {
+    public void testCanGetIncreasedScholarship() throws Exception {
         student.addGrade(new Grade("Math", 5, WorkType.EXAM, 1));
         student.addGrade(new Grade("English", 5, WorkType.TEST, 1));
         student.addGrade(new Grade("History", 5, WorkType.PASS, 1));
@@ -102,7 +104,7 @@ class RecordBookTest {
     }
 
     @Test
-    public void testCanGetIncreasedScholarshipWithNoAll5Grades() {
+    public void testCanGetIncreasedScholarshipWithNoAll5Grades() throws Exception {
         student.addGrade(new Grade("Osi", 4, WorkType.EXAM, 3));
         student.addGrade(new Grade("Tvims", 5, WorkType.ASSIGNMENT, 3));
         student.addGrade(new Grade("AI", 5, WorkType.COLLOQUIUM, 3));

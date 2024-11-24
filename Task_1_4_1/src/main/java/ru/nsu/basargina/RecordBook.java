@@ -87,7 +87,8 @@ public class RecordBook {
      * @return true if student can get
      */
     public boolean canGetRedDiploma() {
-        long fivesCnt = grades.stream().filter(Grade::isFive).count();
+        List<Grade> lastSemGrades = getLastSemesterGrades();
+        long fivesCnt = lastSemGrades.stream().filter(Grade::isFive).count();
         
         // checks if student doesn't have 3
         boolean noSatisfactoryMarks = grades.stream().noneMatch(grade ->
@@ -95,11 +96,11 @@ public class RecordBook {
                         || grade.getType() == WorkType.DIFF_PASS));
 
         // how many % of fives student has
-        double fivesPercentage = (grades.isEmpty()) ? 0 
-                : (fivesCnt / (double) grades.size()) * 100;
+        double fivesPercentage = (lastSemGrades.isEmpty()) ? 0
+                : (fivesCnt / (double) lastSemGrades.size()) * 100;
 
         // checks if student has 5 for vkr
-        boolean hasExcellentVkr = grades.stream()
+        boolean hasExcellentVkr = lastSemGrades.stream()
                 .filter(grade -> grade.getType() == WorkType.VKR_DEFENSE)
                 .anyMatch(Grade::isFive);
 
