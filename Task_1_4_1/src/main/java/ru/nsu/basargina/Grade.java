@@ -97,6 +97,7 @@ public class Grade {
 
     /**
      * Set work type of the grade.
+     *
      * @param type - one of 8 work types
      * @throws Exception if work type is null
      */
