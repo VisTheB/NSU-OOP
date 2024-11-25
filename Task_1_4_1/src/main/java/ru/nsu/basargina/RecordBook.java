@@ -2,6 +2,7 @@ package ru.nsu.basargina;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class for creating student's record book
@@ -126,13 +127,9 @@ public class RecordBook {
      */
     private List<Grade> getLastSemesterGrades() {
         int lastSemester = grades.stream().mapToInt(Grade::getSemester).max().orElse(0);
-        List<Grade> lastSemesterGrades = new ArrayList<>();
-        
-        for (Grade grade : grades) {
-            if (grade.getSemester() == lastSemester) {
-                lastSemesterGrades.add(grade);
-            }
-        }
-        return lastSemesterGrades;
+
+        return grades.stream()
+                .filter(grade -> grade.getSemester() == lastSemester)
+                .collect(Collectors.toList());
     }
 }
