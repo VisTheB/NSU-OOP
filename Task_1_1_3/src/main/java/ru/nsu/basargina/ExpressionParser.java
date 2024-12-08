@@ -16,6 +16,7 @@ public class ExpressionParser {
     private int pos = -1; // current index
     private int ch; // current char
     private final String input;
+    private int varsCnt = 0; // number of variables in the expression
 
     /**
      * Create parser for user input.
@@ -152,11 +153,20 @@ public class ExpressionParser {
             }
             String name = input.substring(startPos, this.pos);
             factor = new Variable(name);
-
+            varsCnt++;
         } else {
             throw new Exception("Unexpected: " + (char) ch);
         }
 
         return factor;
+    }
+
+    /**
+     * Get number of variables in the expression.
+     *
+     * @return number of variables
+     */
+    public int getVarsCnt() {
+        return varsCnt;
     }
 }
