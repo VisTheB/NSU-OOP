@@ -64,8 +64,8 @@ public class Mul extends Expression {
 
     /**
      * Simplification of a given multiplication expression.
-     * 
-     * @return simplified expression
+     *
+     * @return - simplified expression
      */
     public Expression simplify() {
         Expression simpleLeft = left.simplify();

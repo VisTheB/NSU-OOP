@@ -56,7 +56,7 @@ public class Variable extends Expression {
      * @return runtime exception
      */
     public double eval() {
-            throw new RuntimeException("You haven't assigned this variable: " + name);
+        throw new RuntimeException("You haven't assigned this variable: " + name);
     }
 
     /**
