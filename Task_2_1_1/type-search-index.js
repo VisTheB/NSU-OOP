@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.basargina","l":"NonPrimeChecker"},{"p":"ru.nsu.basargina","l":"NonPrimeCheckerUtils"},{"p":"ru.nsu.basargina","l":"ParallelNonPrimeChecker"},{"p":"ru.nsu.basargina","l":"SequentialNonPrimeChecker"},{"p":"ru.nsu.basargina","l":"ThreadedNonPrimeChecker"}];updateSearchResults();
