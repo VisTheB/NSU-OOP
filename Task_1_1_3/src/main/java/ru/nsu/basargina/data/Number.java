@@ -45,4 +45,22 @@ public class Number extends Expression {
     public double eval(Map<String, Double> variables) {
         return value;
     }
+
+    /**
+     * Returns value for the evaluation without variables.
+     *
+     * @return - number itself
+     */
+    public double eval() {
+        return value;
+    }
+
+    /**
+     * Simplification of Number.
+     *
+     * @return new number with the same value
+     */
+    public Expression simplify() {
+        return new Number(value);
+    }
 }

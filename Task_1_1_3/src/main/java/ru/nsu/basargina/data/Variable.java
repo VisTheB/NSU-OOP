@@ -49,4 +49,22 @@ public class Variable extends Expression {
             throw new RuntimeException("You haven't assigned this variable: " + name);
         }
     }
+
+    /**
+     * Evaluation without variables throws exception.
+     *
+     * @return runtime exception
+     */
+    public double eval() {
+        throw new RuntimeException("You haven't assigned this variable: " + name);
+    }
+
+    /**
+     * Simplification of Variable.
+     *
+     * @return new variable with the same name
+     */
+    public Expression simplify() {
+        return new Variable(name);
+    }
 }

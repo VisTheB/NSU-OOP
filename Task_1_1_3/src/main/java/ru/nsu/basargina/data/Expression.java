@@ -28,4 +28,18 @@ public abstract class Expression {
      * @return meaning of the expression
      */
     public abstract double eval(Map<String, Double> variables);
+
+    /**
+     * Evaluation of the expression without variables.
+     *
+     * @return meaning of the expression
+     */
+    public abstract double eval();
+
+    /**
+     * Simplification of a given expression.
+     *
+     * @return simplified expression
+     */
+    public abstract Expression simplify();
 }

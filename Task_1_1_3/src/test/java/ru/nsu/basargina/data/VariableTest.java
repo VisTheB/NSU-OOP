@@ -42,7 +42,7 @@ class VariableTest {
     }
 
     @Test
-    void testEvalWithoutVariable() {
+    void testEvalNotAssignedVariable() {
         Expression variable = new Variable("f");
         Map<String, Double> vars = new HashMap<>();
         vars.put("k", 2.0);
@@ -51,5 +51,13 @@ class VariableTest {
             variable.eval(vars);
         });
         assertEquals("You haven't assigned this variable: f", exception.getMessage());
+    }
+
+    @Test
+    void testEvalWithoutVariable() {
+        Expression variable = new Variable("a");
+
+        Exception exception = assertThrows(RuntimeException.class, variable::eval);
+        assertEquals("You haven't assigned this variable: a", exception.getMessage());
     }
 }
