@@ -11,6 +11,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+/**
+ * Class with tests for NonPrimeChecker.
+ */
 public class NonPrimeCheckerTest {
     @ParameterizedTest()
     @ArgumentsSource(NonPrimeCheckerProvider.class)

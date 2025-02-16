@@ -6,6 +6,7 @@ package ru.nsu.basargina;
 public class NonPrimeCheckerUtils {
     /**
      * Check if given number is prime.
+     *
      * @param n number
      * @return true, if n is prime
      */

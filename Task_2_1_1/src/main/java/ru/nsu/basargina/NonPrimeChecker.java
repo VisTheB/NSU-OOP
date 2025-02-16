@@ -7,6 +7,8 @@ import java.util.List;
  */
 public interface NonPrimeChecker {
     /**
+     * Method to check if an array has not prime number.
+     *
      * @param array array with numbers
      * @return true if the array has at least one not prime number
      */
