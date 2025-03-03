@@ -42,7 +42,7 @@ public class OrderQueue {
     }
 
     /**
-     * Synchronized version of getting size og the queue.
+     * Synchronized version of getting size of the queue.
      *
      * @return queue size
      */
