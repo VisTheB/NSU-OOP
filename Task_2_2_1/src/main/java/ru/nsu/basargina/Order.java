@@ -1,7 +1,5 @@
 package ru.nsu.basargina;
 
-import ru.nsu.basargina.OrderStatus;
-
 /**
  * Class for describing an order.
  */

@@ -1,9 +1,6 @@
 package ru.nsu.basargina;
 
-import ru.nsu.basargina.OrderStatus;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Class for courier with id and name who will take pizzas from warehouse

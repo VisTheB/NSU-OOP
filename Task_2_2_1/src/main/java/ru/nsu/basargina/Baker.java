@@ -1,9 +1,5 @@
 package ru.nsu.basargina;
 
-import ru.nsu.basargina.OrderStatus;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * Class for baker with id and name who will bake pizza for given period of time.
  */
