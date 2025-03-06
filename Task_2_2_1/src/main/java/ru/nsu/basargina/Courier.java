@@ -10,32 +10,21 @@ import static ru.nsu.basargina.OrderStatus.*;
  * and deliver them for given period of time.
  */
 public class Courier implements Runnable {
-    private final int courierId;
     private final String courierName;
     private final int trunkCapacity;
     private final Warehouse warehouse;
-    private AtomicBoolean running = new AtomicBoolean(true);
 
     /**
      * Create courier.
      *
-     * @param courierId - courier id
      * @param courierName - courier name
      * @param trunkCapacity - courier's trunk capacity
      * @param warehouse - warehouse with pizzas
      */
-    public Courier(int courierId, String courierName, int trunkCapacity, Warehouse warehouse) {
-        this.courierId = courierId;
+    public Courier(String courierName, int trunkCapacity, Warehouse warehouse) {
         this.courierName = courierName;
         this.trunkCapacity = trunkCapacity;
         this.warehouse = warehouse;
-    }
-
-    /**
-     * Stop courier's thread
-     */
-    public void stopCourier() {
-        running.set(false);
     }
 
     /**
@@ -43,7 +32,8 @@ public class Courier implements Runnable {
      */
     @Override
     public void run() {
-        while (running.get()) {
+        Thread current = Thread.currentThread();
+        while (!current.isInterrupted()) {
             try {
                 // Take n pizzas form the warehouse
                 List<Order> orders = warehouse.takePizzas(trunkCapacity);
@@ -51,7 +41,7 @@ public class Courier implements Runnable {
                 // Deliver orders
                 for (Order order : orders) {
                     order.setOrderStatus(DELIVERING);
-                    System.out.println(order.getOrderId() + "is DELIVERING by Courier " + courierName);
+                    System.out.println(order);
                 }
                 // Let delivery take 2 seconds
                 Thread.sleep(2000);
@@ -59,12 +49,11 @@ public class Courier implements Runnable {
                 // Order has been delivered
                 for (Order order : orders) {
                     order.setOrderStatus(DELIVERED);
-                    System.out.println(order.getOrderId() + " DELIVERED");
+                    System.out.println(order);
                 }
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                //running.set(false);
             }
         }
         System.out.println("Courier " + courierName + " stopped.");

@@ -1,0 +1,12 @@
+{
+  "ordersCnt": 10,
+  "warehouseCapacity": 5,
+  "workingTimeSeconds": 10,
+  "bakers": [
+    { "bakerName": "John", "cookingTimePerPizza": 2.0 },
+    { "bakerName": "Aboba", "cookingTimePerPizza": 1.5 }
+  ],
+  "couriers": [
+    { "courierName": "Momo", "trunkCapacity": 3 },
+  ]
+}

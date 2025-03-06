@@ -9,6 +9,7 @@ import java.util.List;
  * Class that parses pizzeria config from json.
  */
 public class PizzeriaConfig {
+    private int ordersCnt;
     private int warehouseCapacity;
     private int workingTimeSeconds;
     private List<Baker> bakers;
@@ -24,6 +25,15 @@ public class PizzeriaConfig {
     public static PizzeriaConfig loadFromFile(String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(new File(filePath), PizzeriaConfig.class);
+    }
+
+    /**
+     * Getter for orders count.
+     *
+     * @return orders count
+     */
+    public int getOrdersCnt() {
+        return ordersCnt;
     }
 
     /**
@@ -66,18 +76,8 @@ public class PizzeriaConfig {
      * Internal class for baker for correct json parsing.
      */
     public static class Baker {
-        private int bakerId;
         private String bakerName;
         private double cookingTimePerPizza;
-
-        /**
-         * Getter for baker id.
-         *
-         * @return baker id
-         */
-        public int getBakerId() {
-            return bakerId;
-        }
 
         /**
          * Getter for baker's name.
@@ -102,18 +102,8 @@ public class PizzeriaConfig {
      * Internal class for courier for correct json parsing.
      */
     public static class Courier {
-        private int courierId;
         private String courierName;
         private int trunkCapacity;
-
-        /**
-         * Getter for courier id.
-         *
-         * @return courier id
-         */
-        public int getCourierId() {
-            return courierId;
-        }
 
         /**
          * Getter for courier's name.

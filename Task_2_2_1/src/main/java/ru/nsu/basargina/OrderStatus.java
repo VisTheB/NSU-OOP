@@ -1,5 +1,8 @@
 package ru.nsu.basargina;
 
+/**
+ * Enum with possible order statuses.
+ */
 public enum OrderStatus {
     CREATED,
     BAKING,

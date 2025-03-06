@@ -53,6 +53,6 @@ public class Order {
      */
     @Override
     public String toString() {
-        return "[Order " + OrderId + " " + orderStatus + "]";
+        return "[Order " + getOrderId() + " " + getOrderStatus() + "]";
     }
 }
