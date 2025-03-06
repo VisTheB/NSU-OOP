@@ -8,5 +8,6 @@
   ],
   "couriers": [
     { "courierName": "Momo", "trunkCapacity": 3 },
+    { "courierName": "Dasha", "trunkCapacity": 2 }
   ]
 }
