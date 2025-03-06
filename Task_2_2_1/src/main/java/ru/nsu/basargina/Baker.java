@@ -1,8 +1,8 @@
 package ru.nsu.basargina;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import ru.nsu.basargina.OrderStatus;
 
-import static ru.nsu.basargina.OrderStatus.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Class for baker with id and name who will bake pizza for given period of time.
@@ -41,7 +41,7 @@ public class Baker implements Runnable {
                 Order order = orderQueue.take();
 
                 // Refresh status
-                order.setOrderStatus(BAKING);
+                order.setOrderStatus(OrderStatus.BAKING);
                 System.out.println(order);
 
                 // Baker bakes pizza
@@ -49,7 +49,7 @@ public class Baker implements Runnable {
                 Thread.sleep(sleepTime);
 
                 // Put pizza to the warehouse when it's ready
-                order.setOrderStatus(READY_FOR_DELIVERY);
+                order.setOrderStatus(OrderStatus.READY_FOR_DELIVERY);
                 System.out.println(order);
                 warehouse.putPizza(order);
 

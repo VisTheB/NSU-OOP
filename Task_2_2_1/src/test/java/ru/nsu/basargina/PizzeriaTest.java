@@ -12,10 +12,11 @@ class PizzeriaTest {
     @Test
     void testPizzeriaWorkflow() throws InterruptedException, IOException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
+        final PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
-        PizzeriaConfig config = PizzeriaConfig.loadFromFile("src/test/resources/pizzeria-config.json");
+        PizzeriaConfig config = PizzeriaConfig.loadFromFile(
+                "src/test/resources/pizzeria-config.json");
 
         Pizzeria pizzeria = new Pizzeria(config);
 

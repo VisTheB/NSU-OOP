@@ -1,9 +1,9 @@
 package ru.nsu.basargina;
 
+import ru.nsu.basargina.OrderStatus;
+
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static ru.nsu.basargina.OrderStatus.*;
 
 /**
  * Class for courier with id and name who will take pizzas from warehouse
@@ -40,7 +40,7 @@ public class Courier implements Runnable {
 
                 // Deliver orders
                 for (Order order : orders) {
-                    order.setOrderStatus(DELIVERING);
+                    order.setOrderStatus(OrderStatus.DELIVERING);
                     System.out.println(order);
                 }
                 // Let delivery take 2 seconds
@@ -48,7 +48,7 @@ public class Courier implements Runnable {
 
                 // Order has been delivered
                 for (Order order : orders) {
-                    order.setOrderStatus(DELIVERED);
+                    order.setOrderStatus(OrderStatus.DELIVERED);
                     System.out.println(order);
                 }
 

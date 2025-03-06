@@ -1,12 +1,12 @@
 package ru.nsu.basargina;
 
-import static ru.nsu.basargina.OrderStatus.*;
+import ru.nsu.basargina.OrderStatus;
 
 /**
  * Class for describing an order.
  */
 public class Order {
-    private final int OrderId;
+    private final int orderId;
     private OrderStatus orderStatus;
 
     /**
@@ -15,8 +15,8 @@ public class Order {
      * @param orderId - order id
      */
     public Order(int orderId) {
-        this.OrderId = orderId;
-        this.orderStatus = CREATED;
+        this.orderId = orderId;
+        this.orderStatus = OrderStatus.CREATED;
     }
 
     /**
@@ -24,8 +24,8 @@ public class Order {
      *
      * @return - order id
      */
-    public int getOrderId() {
-        return OrderId;
+    public int getorderId() {
+        return orderId;
     }
 
     /**
@@ -53,6 +53,6 @@ public class Order {
      */
     @Override
     public String toString() {
-        return "[Order " + getOrderId() + " " + getOrderStatus() + "]";
+        return "[Order " + getorderId() + " " + getOrderStatus() + "]";
     }
 }
