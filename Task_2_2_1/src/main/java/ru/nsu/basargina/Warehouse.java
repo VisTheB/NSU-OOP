@@ -71,7 +71,8 @@ public class Warehouse {
      *
      * @param stopWarehouse true ot false
      */
-    public void setStopWarehouse(Boolean stopWarehouse) {
+    public synchronized void setStopWarehouse(Boolean stopWarehouse) {
         this.stopWarehouse = stopWarehouse;
+        notifyAll();
     }
 }

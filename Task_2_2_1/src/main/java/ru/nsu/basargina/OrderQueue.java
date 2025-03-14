@@ -28,6 +28,7 @@ public class OrderQueue {
      */
     public synchronized Order take() throws InterruptedException {
         while (!stopOrderQueue & queue.isEmpty()) {
+            System.out.println(Thread.currentThread() + " waiting.");
             wait();
         }
         return queue.poll();
@@ -56,7 +57,8 @@ public class OrderQueue {
      *
      * @param stopOrderQueue true ot false
      */
-    public void setStopOrderQueue(Boolean stopOrderQueue) {
+    public synchronized void setStopOrderQueue(Boolean stopOrderQueue) {
         this.stopOrderQueue = stopOrderQueue;
+        notifyAll();
     }
 }
