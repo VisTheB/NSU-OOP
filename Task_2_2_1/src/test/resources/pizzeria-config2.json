@@ -1,6 +1,6 @@
 {
-  "generationInterval": 600,
-  "warehouseCapacity": 5,
+  "generationInterval": 100,
+  "warehouseCapacity": 8,
   "workingTimeSeconds": 10,
   "bakers": [
     { "bakerName": "John", "cookingTimePerPizza": 2.0 },

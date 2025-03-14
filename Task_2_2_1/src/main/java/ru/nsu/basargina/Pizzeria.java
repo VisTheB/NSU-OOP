@@ -7,9 +7,6 @@ import java.util.List;
  * Pizzeria class for managing orders baking/delivering and closing pizzeria.
  */
 public class Pizzeria {
-    private final int orderGenerationInterval = 500;
-    private final int ordersCnt;
-
     final OrderQueue orderQueue;
     final Warehouse warehouse;
 
@@ -18,21 +15,24 @@ public class Pizzeria {
     private final List<Baker> bakers = new ArrayList<>();
     private final List<Courier> couriers = new ArrayList<>();
 
+    private Thread generatorThread;
+    private OrderGenerator orderGenerator;
+    private final long generationInterval;
+
     /**
      * Create warehouse, orders queue, bakers and couriers.
      *
      * @param config - pizzeria config
      */
     public Pizzeria(PizzeriaConfig config) {
-        this.ordersCnt = config.getOrdersCnt();
         this.orderQueue = new OrderQueue();
-        this.warehouse = new Warehouse(config.getWarehouseCapacity());
+        this.warehouse = new Warehouse(config.warehouseCapacity);
 
         // Create bakers
-        for (PizzeriaConfig.Baker b : config.getBakers()) {
+        for (PizzeriaConfig.Baker b : config.bakers) {
             Baker baker = new Baker(
-                    b.getBakerName(),
-                    b.getCookingTimePerPizza(),
+                    b.bakerName,
+                    b.cookingTimePerPizza,
                     orderQueue,
                     warehouse
             );
@@ -40,14 +40,17 @@ public class Pizzeria {
         }
 
         // Create couriers
-        for (PizzeriaConfig.Courier c : config.getCouriers()) {
+        for (PizzeriaConfig.Courier c : config.couriers) {
             Courier courier = new Courier(
-                    c.getCourierName(),
-                    c.getTrunkCapacity(),
+                    c.courierName,
+                    c.trunkCapacity,
                     warehouse
             );
             couriers.add(courier);
         }
+
+        this.generationInterval = config.generationInterval;
+        this.orderGenerator = new OrderGenerator(orderQueue, generationInterval);
     }
 
     /**
@@ -66,40 +69,17 @@ public class Pizzeria {
             t.start();
         }
 
-        // Generate orders
-        for (int i = 0; i < ordersCnt; i++) {
-            Order order = new Order(i + 1);
-            System.out.println(order);
-            orderQueue.put(order);
-
-            try {
-                Thread.sleep(orderGenerationInterval);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+        generatorThread = new Thread(orderGenerator, "OrderGenThread");
+        generatorThread.start();
     }
 
     /**
      * Stop accepting orders, wait until all threads finish.
      */
     public void stopPizzeria() {
-        // Wait until all orders are done and delivered
-        while (!orderQueue.isEmpty() || warehouse.getCurrentCount() > 0) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        // Stop bakers and couriers threads
-        for (Thread t : bakerThreads) {
-            t.interrupt();
-        }
-        for (Thread t : courierThreads) {
-            t.interrupt();
-        }
+        orderGenerator.stopGenerating();
+        orderQueue.setStopOrderQueue(true);
+        warehouse.setStopWarehouse(true);
 
         for (Thread t : bakerThreads) {
             try {
@@ -117,5 +97,14 @@ public class Pizzeria {
         }
 
         System.out.println("Pizzeria stopped.");
+    }
+
+    /**
+     * Getter for orders count.
+     *
+     * @return orders count
+     */
+    public int getOrderCounter() {
+        return orderGenerator.getOrderCounter();
     }
 }

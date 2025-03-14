@@ -8,6 +8,7 @@ import java.util.Queue;
  */
 public class OrderQueue {
     private final Queue<Order> queue = new LinkedList<>();
+    private Boolean stopOrderQueue = false;
 
     /**
      * Add an order to the order queue and notify waiting bakers.
@@ -26,7 +27,7 @@ public class OrderQueue {
      * @throws InterruptedException if thread was interrupted
      */
     public synchronized Order take() throws InterruptedException {
-        while (queue.isEmpty()) {
+        while (!stopOrderQueue & queue.isEmpty()) {
             wait();
         }
         return queue.poll();
@@ -48,5 +49,14 @@ public class OrderQueue {
      */
     public synchronized int size() {
         return queue.size();
+    }
+
+    /**
+     * Setter for stopping orders queue.
+     *
+     * @param stopOrderQueue true ot false
+     */
+    public void setStopOrderQueue(Boolean stopOrderQueue) {
+        this.stopOrderQueue = stopOrderQueue;
     }
 }

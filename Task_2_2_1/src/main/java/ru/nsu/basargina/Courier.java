@@ -34,6 +34,9 @@ public class Courier implements Runnable {
             try {
                 // Take n pizzas form the warehouse
                 List<Order> orders = warehouse.takePizzas(trunkCapacity);
+                if (orders.isEmpty()) {
+                    break;
+                }
 
                 // Deliver orders
                 for (Order order : orders) {

@@ -35,6 +35,9 @@ public class Baker implements Runnable {
             try {
                 // Take order from order queue
                 Order order = orderQueue.take();
+                if (order == null) {
+                    break;
+                }
 
                 // Refresh status
                 order.setOrderStatus(OrderStatus.BAKING);

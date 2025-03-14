@@ -9,6 +9,7 @@ import java.util.List;
 public class Warehouse {
     private final int capacity;
     private final List<Order> storage;
+    private Boolean stopWarehouse = false;
 
     /**
      * Create warehouse with given capacity.
@@ -42,7 +43,7 @@ public class Warehouse {
      * @throws InterruptedException if thread was interrupted
      */
     public synchronized List<Order> takePizzas(int n) throws InterruptedException {
-        while (storage.isEmpty() && this.getCurrentCount() != n) {
+        while (!stopWarehouse & storage.isEmpty() && this.getCurrentCount() != n) {
             wait();  // wait until n pizzas occur in the storage
         }
 
@@ -63,5 +64,14 @@ public class Warehouse {
      */
     public synchronized int getCurrentCount() {
         return storage.size();
+    }
+
+    /**
+     * Setter for stopping warehouse.
+     *
+     * @param stopWarehouse true ot false
+     */
+    public void setStopWarehouse(Boolean stopWarehouse) {
+        this.stopWarehouse = stopWarehouse;
     }
 }
