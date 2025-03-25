@@ -1,0 +1,98 @@
+package ru.nsu.basargina.model;
+
+import java.util.ArrayList;
+
+/**
+ * Class with snake's moving logic.
+ */
+public class Snake {
+    private ArrayList<Segment> segments;
+    private Direction currentDirection;
+
+    /**
+     * Create snake with initial parameters.
+     *
+     * @param startX start x coord
+     * @param startY start y coord
+     * @param initialDirection inital direction
+     */
+    public Snake(int startX, int startY, Direction initialDirection) {
+        segments = new ArrayList<>();
+        segments.add(new Segment(startX, startY));
+        this.currentDirection = initialDirection;
+    }
+
+    /**
+     * Getter for the whole snake.
+     *
+     * @return list of segments
+     */
+    public ArrayList<Segment> getSegments() {
+        return segments;
+    }
+
+    /**
+     * Getter for current snake direction.
+     *
+     * @return current direction
+     */
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
+    /**
+     * Setter for current snake direction.
+     *
+     * @param direction current direction
+     */
+    public void setCurrentDirection(Direction direction) {
+        this.currentDirection = direction;
+    }
+
+    /**
+     * Method for snake moving.
+     *
+     * @param grow if true then snake grows
+     */
+    public void move(boolean grow) {
+        Segment head = segments.getFirst();
+        int newX = head.getX();
+        int newY = head.getY();
+
+        switch (currentDirection) {
+            case UP:
+                newY--;
+                break;
+            case DOWN:
+                newY++;
+                break;
+            case LEFT:
+                newX--;
+                break;
+            case RIGHT:
+                newX++;
+                break;
+        }
+
+        segments.addFirst(new Segment(newX, newY));
+
+        if (!grow) {
+            segments.removeLast();
+        }
+    }
+
+    /**
+     * Check if snake's head collided with body.
+     *
+     * @return true if collided
+     */
+    public boolean checkSelfCollision() {
+        Segment head = segments.getFirst();
+        for (int i = 1; i < segments.size(); i++) {
+            if (head.equals(segments.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
