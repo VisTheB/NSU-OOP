@@ -14,12 +14,14 @@ repositories {
 
 javafx {
     version = "21"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media']
+    modules = [ 'javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.openjfx:javafx-controls:21'
+    implementation 'org.openjfx:javafx-fxml:21'
 }
 
 test {
@@ -37,4 +39,15 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+application {
+    mainClass = 'ru.nsu.basargina.Main'
+}
+
+run {
+    jvmArgs = [
+            '--module-path', 'C:/Users/Полина/Downloads/openjfx-21.0.6_windows-x64_bin-sdk/javafx-sdk-21.0.6/lib',
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }

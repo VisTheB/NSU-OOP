@@ -1,12 +1,16 @@
 package ru.nsu.basargina.model;
 
+import ru.nsu.basargina.model.fieldSegments.BodySegment;
+import ru.nsu.basargina.model.fieldSegments.Segment;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class with snake's moving logic.
  */
 public class Snake {
-    private ArrayList<Segment> segments;
+    private List<BodySegment> segments;
     private Direction currentDirection;
 
     /**
@@ -18,7 +22,7 @@ public class Snake {
      */
     public Snake(int startX, int startY, Direction initialDirection) {
         segments = new ArrayList<>();
-        segments.add(new Segment(startX, startY));
+        segments.add(new BodySegment(startX, startY));
         this.currentDirection = initialDirection;
     }
 
@@ -27,7 +31,7 @@ public class Snake {
      *
      * @return list of segments
      */
-    public ArrayList<Segment> getSegments() {
+    public List<BodySegment> getSegments() {
         return segments;
     }
 
@@ -74,7 +78,7 @@ public class Snake {
                 break;
         }
 
-        segments.addFirst(new Segment(newX, newY));
+        segments.addFirst(new BodySegment(newX, newY));
 
         if (!grow) {
             segments.removeLast();

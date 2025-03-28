@@ -1,9 +1,9 @@
-package ru.nsu.basargina.model;
+package ru.nsu.basargina.model.fieldSegments;
 
 /**
- * Class that represents particular snake piece.
+ * Class that represents block on the game field.
  */
-public class Segment {
+public abstract class Segment {
     private int x;
     private int y;
 
@@ -55,11 +55,11 @@ public class Segment {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Segment)) return false;
-        Segment other = (Segment) obj;
-        return this.x == other.x && this.y == other.y;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Segment other = (Segment) o;
+        return x == other.x && y == other.y;
     }
 
     @Override

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ru.nsu.basargina.controller.GameController">
+
+    <top>
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Level:"/>
+            <Label fx:id="levelLabel" text="Level: "/>
+        </HBox>
+    </top>
+
+    <center>
+        <Canvas fx:id="gameCanvas" width="750" height="500"/>
+    </center>
+
+    <bottom>
+        <Label fx:id="statusLabel" text="Game is running..." BorderPane.alignment="CENTER"/>
+    </bottom>
+</BorderPane>
