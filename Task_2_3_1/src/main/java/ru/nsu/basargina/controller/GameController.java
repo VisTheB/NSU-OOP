@@ -11,10 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import ru.nsu.basargina.model.*;
-import ru.nsu.basargina.model.fieldSegments.BodySegment;
-import ru.nsu.basargina.model.fieldSegments.FoodSegment;
-import ru.nsu.basargina.model.fieldSegments.ObstacleSegment;
+import ru.nsu.basargina.model.Direction;
+import ru.nsu.basargina.model.GameModel;
+import ru.nsu.basargina.model.Level;
+import ru.nsu.basargina.model.Snake;
+import ru.nsu.basargina.model.fieldsegments.BodySegment;
+import ru.nsu.basargina.model.fieldsegments.FoodSegment;
+import ru.nsu.basargina.model.fieldsegments.ObstacleSegment;
 
 /**
  * Class that represents controller of the game.
@@ -41,7 +44,7 @@ public class GameController {
     private Timeline gameLoop;
 
     /**
-     * Start the game:
+     * Start the game.
      */
     @FXML
     public void initialize() {
@@ -147,7 +150,8 @@ public class GameController {
         // Snake's body
         gc.setFill(Color.GREEN);
         for (BodySegment segment : gameModel.getSnake().getSegments()) {
-            gc.fillRect(segment.getX() * blockSize, segment.getY() * blockSize, blockSize - 1, blockSize - 1);
+            gc.fillRect(segment.getX() * blockSize, segment.getY() * blockSize, blockSize - 1,
+                    blockSize - 1);
         }
         // Snake's head
         gc.setFill(Color.DARKGREEN);

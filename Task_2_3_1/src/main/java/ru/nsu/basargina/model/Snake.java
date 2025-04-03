@@ -1,10 +1,10 @@
 package ru.nsu.basargina.model;
 
-import ru.nsu.basargina.model.fieldSegments.BodySegment;
-import ru.nsu.basargina.model.fieldSegments.Segment;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.nsu.basargina.model.fieldsegments.BodySegment;
+import ru.nsu.basargina.model.fieldsegments.Segment;
 
 /**
  * Class with snake's moving logic.

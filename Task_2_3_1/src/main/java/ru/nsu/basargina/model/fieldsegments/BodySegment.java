@@ -1,4 +1,4 @@
-package ru.nsu.basargina.model.fieldSegments;
+package ru.nsu.basargina.model.fieldsegments;
 
 /**
  * Class that represents particular snake segment on the field.

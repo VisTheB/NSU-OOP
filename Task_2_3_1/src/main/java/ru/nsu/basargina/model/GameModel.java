@@ -1,10 +1,12 @@
 package ru.nsu.basargina.model;
 
-import ru.nsu.basargina.model.fieldSegments.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ru.nsu.basargina.model.fieldsegments.BodySegment;
+import ru.nsu.basargina.model.fieldsegments.FoodSegment;
+import ru.nsu.basargina.model.fieldsegments.ObstacleSegment;
 
 /**
  * Class that represents general state of the game: playing field, snake, food, obstacles, 
@@ -96,7 +98,9 @@ public class GameModel {
      * Method for spawning food in random segments.
      */
     public void spawnFood() {
-        int x, y;
+        int x;
+        int y;
+
         do {
             x = random.nextInt(cols);
             y = random.nextInt(rows);
@@ -109,7 +113,9 @@ public class GameModel {
      * Method for spawning obstacle in random segments.
      */
     public void spawnObstacle() {
-        int x, y;
+        int x;
+        int y;
+
         do {
             x = random.nextInt(cols);
             y = random.nextInt(rows);
@@ -158,8 +164,8 @@ public class GameModel {
         BodySegment nextHead = getNextHeadPosition();
 
         // Check if head is out of bounds
-        if (nextHead.getX() < 0 || nextHead.getX() >= cols ||
-                nextHead.getY() < 0 || nextHead.getY() >= rows) {
+        if (nextHead.getX() < 0 || nextHead.getX() >= cols
+                || nextHead.getY() < 0 || nextHead.getY() >= rows) {
             return false;
         }
 

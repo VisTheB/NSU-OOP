@@ -1,4 +1,4 @@
-package ru.nsu.basargina.model.fieldSegments;
+package ru.nsu.basargina.model.fieldsegments;
 
 /**
  * Class that represents block on the game field.
@@ -38,8 +38,6 @@ public abstract class Segment {
 
     /**
      * Setter for x.
-     *
-     * @return x
      */
     public void setX(int x) {
         this.x = x;
@@ -47,8 +45,6 @@ public abstract class Segment {
 
     /**
      * Setter for y.
-     *
-     * @return y
      */
     public void setY(int y) {
         this.y = y;
@@ -56,8 +52,12 @@ public abstract class Segment {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Segment other = (Segment) o;
         return x == other.x && y == other.y;
     }

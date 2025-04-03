@@ -5,14 +5,14 @@ package ru.nsu.basargina.model;
  */
 public class Level {
     private int levelNumber;
-    private int speed;          // Например, скорость обновления (мс)
+    private int speed;
     private int obstacleCount;
 
     /**
      * Create level.
      *
      * @param levelNumber current level number
-     * @param speed
+     * @param speed game speed
      * @param obstacleCount number of obstacles in current level
      */
     public Level(int levelNumber, int speed, int obstacleCount) {
