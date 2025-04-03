@@ -47,4 +47,22 @@ public class Level {
     public int getObstacleCount() {
         return obstacleCount;
     }
+
+    /**
+     * Setter for level number.
+     *
+     * @param levelNumber number of the level to be set
+     */
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    /**
+     * Setter for obstacle count.
+     *
+     * @param obstacleCount number of obstacles to be set
+     */
+    public void setObstacleCount(int obstacleCount) {
+        this.obstacleCount = obstacleCount;
+    }
 }

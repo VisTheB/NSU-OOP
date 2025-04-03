@@ -2,6 +2,8 @@ package ru.nsu.basargina.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,14 +25,15 @@ public class GameController {
 
     @FXML
     private Label statusLabel;
+    private final StringProperty statusText = new SimpleStringProperty("Game is running...");
 
     @FXML
     private Label levelLabel;
+    private final StringProperty levelText = new SimpleStringProperty();
 
     private final int rows = 20;
     private final int cols = 30;
-    private final int foodCount = 4;
-    private final int targetLength = 10;
+    private int targetLength = 10;
     private final int blockSize = 25;
     private final Level level = new Level(1, 200, 5);
 
@@ -43,11 +46,12 @@ public class GameController {
     @FXML
     public void initialize() {
 
-        gameModel = new GameModel(rows, cols, foodCount, targetLength, level);
+        gameModel = new GameModel(rows, cols, targetLength, level);
 
         Level currentLevel = gameModel.getCurrentLevel();
 
-        levelLabel.setText("Level: " + currentLevel.getLevelNumber());
+        statusLabel.textProperty().bind(statusText);
+        levelLabel.textProperty().bind(levelText);
 
         // key pressed event handler
         gameCanvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -58,19 +62,35 @@ public class GameController {
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(currentLevel.getSpeed()), event -> {
             if (!gameModel.update()) {
-                statusLabel.setText("Game Over!");
+                statusText.set("Game Over!");
                 gameLoop.stop();
             } else if (gameModel.isWin()) {
-                statusLabel.setText("You Win!");
-                gameLoop.stop();
+                targetLength++;
+                runNewLevel(level, targetLength);
             }
-            levelLabel.setText("Level: " + currentLevel.getLevelNumber());
+            levelText.set("Level: " + currentLevel.getLevelNumber());
             draw();
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
 
         draw();
+    }
+
+    /**
+     * Method that runs new level.
+     *
+     * @param currLevel current game level
+     */
+    @FXML
+    void runNewLevel(Level currLevel, int newTargetLength) {
+        int currLevelNumber = currLevel.getLevelNumber();
+        int currLevelObstacleCount = currLevel.getObstacleCount();
+
+        currLevel.setObstacleCount(currLevelObstacleCount + 1);
+        currLevel.setLevelNumber(currLevelNumber + 1);
+
+        gameModel.initGame(currLevel, newTargetLength);
     }
 
     /**

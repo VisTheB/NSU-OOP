@@ -60,23 +60,8 @@ public class Snake {
      */
     public void move(boolean grow) {
         Segment head = segments.getFirst();
-        int newX = head.getX();
-        int newY = head.getY();
-
-        switch (currentDirection) {
-            case UP:
-                newY--;
-                break;
-            case DOWN:
-                newY++;
-                break;
-            case LEFT:
-                newX--;
-                break;
-            case RIGHT:
-                newX++;
-                break;
-        }
+        int newX = head.getX() + currentDirection.getXOffset();
+        int newY = head.getY() + currentDirection.getYOffset();
 
         segments.addFirst(new BodySegment(newX, newY));
 

@@ -10,7 +10,6 @@
 
     <top>
         <HBox spacing="10" alignment="CENTER">
-            <Label text="Level:"/>
             <Label fx:id="levelLabel" text="Level: "/>
         </HBox>
     </top>

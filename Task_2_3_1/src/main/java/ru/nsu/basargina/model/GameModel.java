@@ -11,6 +11,7 @@ import java.util.Random;
  * current level and target length of the snake.
  */
 public class GameModel {
+    private final int foodCount = 3;
     private int rows;
     private int cols;
     private Snake snake;
@@ -25,16 +26,20 @@ public class GameModel {
      *
      * @param rows game field number of rows
      * @param cols game field number of columns
-     * @param initialFoodCount initial food segments count
      * @param targetLength target snake length to win the level
      * @param level current game level
      */
-    public GameModel(int rows, int cols, int initialFoodCount, int targetLength, Level level) {
+    public GameModel(int rows, int cols, int targetLength, Level level) {
         this.rows = rows;
         this.cols = cols;
-        this.targetLength = targetLength;
         this.currentLevel = level;
         random = new Random();
+
+        initGame(level, targetLength);
+    }
+
+    public void initGame(Level currLevel, int targetLength) {
+        this.targetLength = targetLength;
 
         // Initialize snake in the middle of the field
         snake = new Snake(cols / 2, rows / 2, Direction.RIGHT);
@@ -42,11 +47,11 @@ public class GameModel {
         foodItems = new ArrayList<>();
         obstacles = new ArrayList<>();
 
-        for (int i = 0; i < initialFoodCount; i++) {
+        for (int i = 0; i < foodCount; i++) {
             spawnFood();
         }
 
-        for (int i = 0; i < level.getObstacleCount(); i++) {
+        for (int i = 0; i < currLevel.getObstacleCount(); i++) {
             spawnObstacle();
         }
     }
@@ -192,22 +197,10 @@ public class GameModel {
      */
     private BodySegment getNextHeadPosition() {
         BodySegment head = snake.getSegments().getFirst();
-        int newX = head.getX();
-        int newY = head.getY();
-        switch (snake.getCurrentDirection()) {
-            case UP:
-                newY--;
-                break;
-            case DOWN:
-                newY++;
-                break;
-            case LEFT:
-                newX--;
-                break;
-            case RIGHT:
-                newX++;
-                break;
-        }
+
+        int newX = head.getX() + snake.getCurrentDirection().getXOffset();
+        int newY = head.getY() + snake.getCurrentDirection().getYOffset();
+
         return new BodySegment(newX, newY);
     }
 
