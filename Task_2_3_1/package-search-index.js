@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.basargina"},{"l":"ru.nsu.basargina.controller"},{"l":"ru.nsu.basargina.model"},{"l":"ru.nsu.basargina.model.fieldsegments"}];updateSearchResults();
