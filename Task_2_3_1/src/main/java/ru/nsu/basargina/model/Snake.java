@@ -2,7 +2,6 @@ package ru.nsu.basargina.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import ru.nsu.basargina.model.fieldsegments.BodySegment;
 import ru.nsu.basargina.model.fieldsegments.Segment;
 
@@ -60,8 +59,8 @@ public class Snake {
      */
     public void move(boolean grow) {
         Segment head = segments.getFirst();
-        int newX = head.getX() + currentDirection.getXOffset();
-        int newY = head.getY() + currentDirection.getYOffset();
+        int newX = head.getX() + currentDirection.getXoffset();
+        int newY = head.getY() + currentDirection.getYoffset();
 
         segments.addFirst(new BodySegment(newX, newY));
 

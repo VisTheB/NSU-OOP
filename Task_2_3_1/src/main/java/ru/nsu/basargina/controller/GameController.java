@@ -51,8 +51,6 @@ public class GameController {
 
         gameModel = new GameModel(rows, cols, targetLength, level);
 
-        Level currentLevel = gameModel.getCurrentLevel();
-
         statusLabel.textProperty().bind(statusText);
         levelLabel.textProperty().bind(levelText);
 
@@ -62,6 +60,8 @@ public class GameController {
                 newScene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPress);
             }
         });
+
+        Level currentLevel = gameModel.getCurrentLevel();
 
         gameLoop = new Timeline(new KeyFrame(Duration.millis(currentLevel.getSpeed()), event -> {
             if (!gameModel.update()) {

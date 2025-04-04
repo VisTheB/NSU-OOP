@@ -3,7 +3,6 @@ package ru.nsu.basargina.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import ru.nsu.basargina.model.fieldsegments.BodySegment;
 import ru.nsu.basargina.model.fieldsegments.FoodSegment;
 import ru.nsu.basargina.model.fieldsegments.ObstacleSegment;
@@ -40,6 +39,12 @@ public class GameModel {
         initGame(level, targetLength);
     }
 
+    /**
+     * Method for starting the game/new level.
+     *
+     * @param currLevel current level of the game
+     * @param targetLength target snake length
+     */
     public void initGame(Level currLevel, int targetLength) {
         this.targetLength = targetLength;
 
@@ -204,8 +209,8 @@ public class GameModel {
     private BodySegment getNextHeadPosition() {
         BodySegment head = snake.getSegments().getFirst();
 
-        int newX = head.getX() + snake.getCurrentDirection().getXOffset();
-        int newY = head.getY() + snake.getCurrentDirection().getYOffset();
+        int newX = head.getX() + snake.getCurrentDirection().getXoffset();
+        int newY = head.getY() + snake.getCurrentDirection().getYoffset();
 
         return new BodySegment(newX, newY);
     }

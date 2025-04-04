@@ -14,7 +14,7 @@ public enum Direction {
      *
      * @return x offset
      */
-    public int getXOffset() {
+    public int getXoffset() {
         return switch (this) {
             case LEFT -> -1;
             case RIGHT -> 1;
@@ -27,7 +27,7 @@ public enum Direction {
      *
      * @return y offset
      */
-    public int getYOffset() {
+    public int getYoffset() {
         return switch (this) {
             case UP -> -1;
             case DOWN -> 1;

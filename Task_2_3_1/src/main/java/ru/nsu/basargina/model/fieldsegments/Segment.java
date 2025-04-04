@@ -4,50 +4,50 @@ package ru.nsu.basargina.model.fieldsegments;
  * Class that represents block on the game field.
  */
 public abstract class Segment {
-    private int x;
-    private int y;
+    private int xCoord;
+    private int yCoord;
 
     /**
      * Create segment with given coordinates.
      *
-     * @param x x coord
-     * @param y y coord
+     * @param xCoord x coord
+     * @param yCoord y coord
      */
-    public Segment(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Segment(int xCoord, int yCoord) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
 
     /**
-     * Getter for x.
+     * Getter for xCoord.
      *
-     * @return x
+     * @return x coord
      */
     public int getX() {
-        return x;
+        return xCoord;
     }
 
     /**
-     * Getter for y.
+     * Getter for yCoord.
      *
-     * @return y
+     * @return y coord
      */
     public int getY() {
-        return y;
+        return yCoord;
     }
 
     /**
-     * Setter for x.
+     * Setter for xCoord.
      */
-    public void setX(int x) {
-        this.x = x;
+    public void setX(int xCoord) {
+        this.xCoord = xCoord;
     }
 
     /**
-     * Setter for y.
+     * Setter for yCoord.
      */
-    public void setY(int y) {
-        this.y = y;
+    public void setY(int yCoord) {
+        this.yCoord = yCoord;
     }
 
     @Override
@@ -59,11 +59,11 @@ public abstract class Segment {
             return false;
         }
         Segment other = (Segment) o;
-        return x == other.x && y == other.y;
+        return xCoord == other.xCoord && yCoord == other.yCoord;
     }
 
     @Override
     public int hashCode() {
-        return 31 * x + y;
+        return 31 * xCoord + yCoord;
     }
 }
