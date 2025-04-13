@@ -10,6 +10,5 @@ public enum WorkType {
     EXAM,
     DIFF_PASS,
     PASS,
-    PRACTICE_REPORT_DEFENSE,
     VKR_DEFENSE
 }

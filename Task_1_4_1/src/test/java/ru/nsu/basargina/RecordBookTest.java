@@ -106,7 +106,7 @@ class RecordBookTest {
     @Test
     public void testCanGetIncreasedScholarshipWithNoAll5Grades() throws Exception {
         student.addGrade(new Grade("Osi", 4, WorkType.EXAM, 3));
-        student.addGrade(new Grade("Tvims", 5, WorkType.ASSIGNMENT, 3));
+        student.addGrade(new Grade("TviMs", 5, WorkType.ASSIGNMENT, 3));
         student.addGrade(new Grade("AI", 5, WorkType.COLLOQUIUM, 3));
 
         assertFalse(student.canGetIncreasedScholarship());

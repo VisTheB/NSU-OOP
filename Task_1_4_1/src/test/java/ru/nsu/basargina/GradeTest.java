@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class GradeTest {
     @Test
     public void testSetNameNull() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade(null, 5, WorkType.EXAM, 1);
         });
 
@@ -20,7 +20,7 @@ class GradeTest {
 
     @Test
     public void testSetNameEmpty() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade("", 5, WorkType.EXAM, 1);
         });
 
@@ -29,7 +29,7 @@ class GradeTest {
 
     @Test
     public void testSetScoreTooLow() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade("Math", -1, WorkType.DIFF_PASS, 2);
         });
 
@@ -38,7 +38,7 @@ class GradeTest {
 
     @Test
     public void testSetScoreTooHigh() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade("Osi", 6, WorkType.ASSIGNMENT, 3);
         });
 
@@ -47,7 +47,7 @@ class GradeTest {
 
     @Test
     public void testSetWorkTypeNull() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             Grade grade = new Grade("AI", 5, null, 4);
         });
 
@@ -56,7 +56,7 @@ class GradeTest {
 
     @Test
     public void testSetSemesterNegative() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade("English", 4, WorkType.TEST, 0);
         });
 
@@ -65,7 +65,7 @@ class GradeTest {
 
     @Test
     public void testSetSemesterTooHigh() {
-        IvalidGradeInputException exception = assertThrows(IvalidGradeInputException.class, () -> {
+        InvalidGradeInputException exception = assertThrows(InvalidGradeInputException.class, () -> {
             new Grade("History", 2, WorkType.COLLOQUIUM, 9);
         });
 

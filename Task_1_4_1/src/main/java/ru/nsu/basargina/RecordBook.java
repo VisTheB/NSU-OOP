@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
  * and getting various information about it using Stream API.
  */
 public class RecordBook {
+
     private List<Grade> grades;
     private boolean isOnPaidForm;
 

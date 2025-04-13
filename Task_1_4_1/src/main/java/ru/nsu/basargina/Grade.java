@@ -73,11 +73,11 @@ public class Grade {
      * Set subject name of the grade.
      *
      * @param name - non-empty string
-     * @throws IvalidGradeInputException if name is null or empty
+     * @throws InvalidGradeInputException if name is null or empty
      */
-    public void setName(String name) throws IvalidGradeInputException {
+    public void setName(String name) throws InvalidGradeInputException {
         if (name == null || name.trim().isEmpty()) {
-            throw new IvalidGradeInputException("Name cannot be null or empty.");
+            throw new InvalidGradeInputException("Name cannot be null or empty.");
         }
         this.subjectName = name;
     }
@@ -86,11 +86,11 @@ public class Grade {
      * Set score of the grade.
      *
      * @param score - number between 2 and 5
-     * @throws IvalidGradeInputException if number is invalid
+     * @throws InvalidGradeInputException if number is invalid
      */
-    public void setScore(int score) throws IvalidGradeInputException {
+    public void setScore(int score) throws InvalidGradeInputException {
         if (score < 2 || score > 5) {
-            throw new IvalidGradeInputException("Score must be between 2 and 5.");
+            throw new InvalidGradeInputException("Score must be between 2 and 5.");
         }
         this.score = score;
     }
@@ -99,11 +99,11 @@ public class Grade {
      * Set work type of the grade.
      *
      * @param type - one of 8 work types
-     * @throws IvalidGradeInputException if work type is null
+     * @throws InvalidGradeInputException if work type is null
      */
-    public void setWorkType(WorkType type) throws IvalidGradeInputException {
+    public void setWorkType(WorkType type) throws InvalidGradeInputException {
         if (type == null) {
-            throw new IvalidGradeInputException("Work type cannot be null.");
+            throw new InvalidGradeInputException("Work type cannot be null.");
         }
         this.type = type;
     }
@@ -112,11 +112,11 @@ public class Grade {
      * Set semester in which grade was received.
      *
      * @param semester - number between 1 and 8
-     * @throws IvalidGradeInputException if number is invalid
+     * @throws InvalidGradeInputException if number is invalid
      */
-    public void setSemester(int semester) throws IvalidGradeInputException {
+    public void setSemester(int semester) throws InvalidGradeInputException {
         if (semester < 1 || semester > 8) {
-            throw new IvalidGradeInputException("Semester must be between 1 and 8.");
+            throw new InvalidGradeInputException("Semester must be between 1 and 8.");
         }
         this.semester = semester;
     }
