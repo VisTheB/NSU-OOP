@@ -19,6 +19,9 @@ import java.util.stream.IntStream;
  * - Divides the source array into equal fragments and sends it to the workers
  * - Collects responses and as soon as false is received,
  * sends SHUTDOWN and shuts down.
+ * Usage:
+ * javac src/main/java/ru/nsu/basargina/Coordinator.java
+ * java -cp src/main/java ru.nsu.basargina.Coordinator --port 9000 --udp 9999 --expected 3 --input ./input.txt
  */
 public class Coordinator {
     private final int tcpPort;
@@ -29,8 +32,6 @@ public class Coordinator {
     private final ExecutorService clientPool = Executors.newCachedThreadPool();
     // Queue for the results from the workers
     private static final BlockingQueue<Boolean> resultQueue = new LinkedBlockingQueue<>();
-    // Flag that at least one worker has already found a composite number.
-    private static final AtomicBoolean compositeFound = new AtomicBoolean(false);
     private final int[] data;
 
     /**
@@ -78,13 +79,19 @@ public class Coordinator {
         coord.run();
     }
 
+    /**
+     * Parses input file into array of numbers.
+     *
+     * @param path path to input file
+     * @return array with numbers from file
+     */
     private static int[] readInputFile(Path path) {
         try (IntStream ints = Files.lines(path)
                 .filter(line -> !line.isBlank())
                 .mapToInt(Integer::parseInt)) {
             return ints.toArray();
         } catch (IOException e) {
-            System.out.println("Something went wrong while reading from file.");
+            System.out.println("Something went wrong while reading from file." + e.getMessage());
         }
         return new int[0];
     }
@@ -96,7 +103,8 @@ public class Coordinator {
      * - Distributes tasks and collects responses.
      */
     private void run() {
-        System.out.printf("Coordinator ports: TCP=%d, UDP=%d. Is waiting %d worker(s)...%n", tcpPort, udpPort, expectedWorkers);
+        System.out.printf("Coordinator ports: TCP=%d, UDP=%d. Is waiting %d worker(s)...%n", tcpPort, udpPort,
+                expectedWorkers);
 
         // Start udp discovering
         Thread udpThread = new Thread(this::udpDiscoveryLoop, "UDP-Discovery");
@@ -116,7 +124,7 @@ public class Coordinator {
             distributeTasks();
             waitTasksCompletion();
         } catch (IOException e) {
-            System.out.println("Something went wrong while opening tcp socket.");
+            System.out.println("Something went wrong while opening tcp socket." + e.getMessage());
         }
         clientPool.shutdown();
     }
@@ -134,21 +142,23 @@ public class Coordinator {
                 // Create packet for receiving messages
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 udpSocket.receive(packet);
-                String msg = new String(packet.getData(), packet.getOffset(), packet.getLength(), StandardCharsets.UTF_8).trim();
+                String msg = new String(packet.getData(), packet.getOffset(), packet.getLength(), 
+                        StandardCharsets.UTF_8).trim();
                 if ("DISCOVER_PRIME".equals(msg)) { // worker has been found
                     InetAddress requester = packet.getAddress();
                     int requesterPort = packet.getPort();
 
-                    // create and send reply from coordinator
+                    // create and send response from coordinator
                     String localIp = InetAddress.getLocalHost().getHostAddress();
-                    String reply = "COORDINATOR " + localIp + " " + tcpPort;
-                    byte[] out = reply.getBytes(StandardCharsets.UTF_8);
+                    String response = "COORDINATOR " + localIp + " " + tcpPort;
+                    byte[] out = response.getBytes(StandardCharsets.UTF_8);
                     udpSocket.send(new DatagramPacket(out, out.length, requester, requesterPort));
-                    System.out.printf("[UDP] Replying to %s:%d – %s%n", requester.getHostAddress(), requesterPort, reply);
+                    System.out.printf("[UDP] Replying to %s:%d - %s%n", requester.getHostAddress(), requesterPort,
+                            response);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong while udp discovering.");
+            System.out.println("Something went wrong while udp discovering." + e.getMessage());
         }
     }
 
@@ -184,7 +194,6 @@ public class Coordinator {
                 received++;
                 if (!partPrime) {
                     allPrime = false;
-                    compositeFound.set(true);
                     break;
                 }
             }
@@ -201,7 +210,7 @@ public class Coordinator {
      * Class for serving one worker:
      * - receives HELLO
      * - sends tasks
-     * - reads RESULT/ABORT_FOUND lines
+     * - reads RESULT lines
      * - sets the result.
      */
     private static class WorkerHandler implements Runnable {
@@ -231,13 +240,13 @@ public class Coordinator {
          * @param fragment array fragment
          */
         void sendTask(UUID taskId, int[] fragment) {
-            // Format: TASK taskId n value1 value2 ... valueN\n
+            // Format: TASK taskId value1 value2 ... valueN\n
             StringBuilder sb = new StringBuilder();
-            sb.append("TASK ").append(taskId).append(' ').append(fragment.length);
+            sb.append("TASK ").append(taskId);
             for (int v : fragment) sb.append(' ').append(v);
 
             out.println(sb);
-            System.out.println("[TCP] - Worker(" + socket.getRemoteSocketAddress() + "): " + sb);
+            System.out.println("[TCP] Sending task to Worker(" + socket.getRemoteSocketAddress() + "): " + sb);
         }
 
         /**
@@ -250,12 +259,12 @@ public class Coordinator {
         /**
          * The main working process.
          * - Reads HELLO = responds with ACK
-         * - Waits for RESULT/ABORT_FOUND and puts the result in the queue
+         * - Waits for RESULT and puts the result in the queue
          */
         @Override
         public void run() {
             try (socket; in; out) {
-                // Hello from coordinator
+                // Hello from worker
                 String hello = in.readLine();
                 System.out.println("[TCP] HELLO from " + socket.getRemoteSocketAddress() + ": " + hello);
                 out.println("ACK");
@@ -270,21 +279,11 @@ public class Coordinator {
                         boolean partPrime = Boolean.parseBoolean(line.split(" ")[2]);
                         resultQueue.offer(partPrime);
                         finished.set(true);
-                        if (!partPrime) {
-                            compositeFound.set(true);
-                        }
-                        break;
-                    }
-                    else if (line.startsWith("ABORT_FOUND")) {
-                        // ABORT_FOUND taskId offendingNumber
-                        resultQueue.offer(false);
-                        finished.set(true);
-                        compositeFound.set(true);
                         break;
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Something went wrong while reading/printing socket.");
+                System.out.println("Something went wrong while reading/printing socket." + e.getMessage());
             }
         }
     }
