@@ -1,7 +1,15 @@
 package ru.nsu.basargina;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +29,8 @@ import java.util.stream.IntStream;
  * sends SHUTDOWN and shuts down.
  * Usage:
  * javac src/main/java/ru/nsu/basargina/Coordinator.java
- * java -cp src/main/java ru.nsu.basargina.Coordinator --port 9000 --udp 9999 --expected 3 --input ./input.txt
+ * java -cp src/main/java ru.nsu.basargina.Coordinator --port 9000 --udp 9999 --expected 3
+ * --input ./input.txt
  */
 public class Coordinator {
     private final int tcpPort;
@@ -67,6 +76,8 @@ public class Coordinator {
                 case "--udp" -> udp = Integer.parseInt(args[++i]);
                 case "--expected" -> exp = Integer.parseInt(args[++i]);
                 case "--input" -> inputFile = Paths.get(args[++i]);
+                default -> {
+                }
             }
         }
 
@@ -103,7 +114,8 @@ public class Coordinator {
      * - Distributes tasks and collects responses.
      */
     private void run() {
-        System.out.printf("Coordinator ports: TCP=%d, UDP=%d. Is waiting %d worker(s)...%n", tcpPort, udpPort,
+        System.out.printf("Coordinator ports: TCP=%d, UDP=%d. Is waiting %d worker(s)...%n",
+                tcpPort, udpPort,
                 expectedWorkers);
 
         // Start udp discovering
@@ -153,7 +165,8 @@ public class Coordinator {
                     String response = "COORDINATOR " + localIp + " " + tcpPort;
                     byte[] out = response.getBytes(StandardCharsets.UTF_8);
                     udpSocket.send(new DatagramPacket(out, out.length, requester, requesterPort));
-                    System.out.printf("[UDP] Replying to %s:%d - %s%n", requester.getHostAddress(), requesterPort,
+                    System.out.printf("[UDP] Replying to %s:%d - %s%n", requester.getHostAddress(),
+                            requesterPort,
                             response);
                 }
             }
@@ -173,7 +186,9 @@ public class Coordinator {
         for (int i = 0; i < workersCnt; i++) {
             int start = i * chunk;
             int end = Math.min(data.length, start + chunk);
-            if (start >= end) break;
+            if (start >= end) {
+                break;
+            }
 
             int[] fragment = Arrays.copyOfRange(data, start, end);
             UUID taskId = UUID.randomUUID();
@@ -197,7 +212,8 @@ public class Coordinator {
                     break;
                 }
             }
-            System.out.printf("Result: array %s contains only prime numbers%n", allPrime ? "" : "doesn't");
+            System.out.printf("Result: array %s contains only prime numbers%n",
+                    allPrime ? "" : "doesn't");
         } catch (InterruptedException e) {
             System.out.println("Waiting for tasks completion has been interrupted.");
             Thread.currentThread().interrupt();
@@ -228,14 +244,16 @@ public class Coordinator {
          */
         WorkerHandler(Socket socket) throws IOException {
             this.socket = socket;
-            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-            this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),
+            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(),
+                    StandardCharsets.UTF_8));
+            this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),
+                    StandardCharsets.UTF_8),
                     true);
         }
 
         /**
          * Sends the task to the worker as a string.
-         * 
+         *
          * @param taskId task id
          * @param fragment array fragment
          */
@@ -243,10 +261,13 @@ public class Coordinator {
             // Format: TASK taskId value1 value2 ... valueN\n
             StringBuilder sb = new StringBuilder();
             sb.append("TASK ").append(taskId);
-            for (int v : fragment) sb.append(' ').append(v);
+            for (int v : fragment) {
+                sb.append(' ').append(v);
+            }
 
             out.println(sb);
-            System.out.println("[TCP] Sending task to Worker(" + socket.getRemoteSocketAddress() + "): " + sb);
+            System.out.println("[TCP] Sending task to Worker(" + socket.getRemoteSocketAddress()
+                    + "): " + sb);
         }
 
         /**
@@ -266,7 +287,8 @@ public class Coordinator {
             try (socket; in; out) {
                 // Hello from worker
                 String hello = in.readLine();
-                System.out.println("[TCP] HELLO from " + socket.getRemoteSocketAddress() + ": " + hello);
+                System.out.println("[TCP] HELLO from " + socket.getRemoteSocketAddress()
+                        + ": " + hello);
                 out.println("ACK");
 
                 String line;
@@ -283,7 +305,8 @@ public class Coordinator {
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Something went wrong while reading/printing socket." + e.getMessage());
+                System.out.println("Something went wrong while reading/printing socket."
+                        + e.getMessage());
             }
         }
     }

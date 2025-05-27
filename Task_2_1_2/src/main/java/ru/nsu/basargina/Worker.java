@@ -1,7 +1,16 @@
 package ru.nsu.basargina;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
 import java.util.UUID;
@@ -151,51 +160,13 @@ public class Worker {
 
     /**
      * Process string "TASK taskId n1 n2 … nk".
-     * If composite number has been found, break and send RESULT.
+     * Send RESULT after processing.
      *
      * @param msg string with task
      */
     private void handleTask(String msg) {
-        StringTokenizer st = new StringTokenizer(msg);
-        st.nextToken(); // "TASK"
-        String taskId = st.nextToken();
-
-        boolean allPrime = true;
-
-        while (st.hasMoreTokens()) {
-            int n = Integer.parseInt(st.nextToken());
-            if (!isPrime(n)) {
-                allPrime = false;
-                break;
-            }
-        }
-
-        if (allPrime) {
-            out.printf("RESULT %s true%n", taskId);
-        } else {
-            out.printf("RESULT %s false%n", taskId);
-        }
-    }
-
-    /**
-     * Util method for checking prime numbers.
-     *
-     * @param n number to be checked
-     * @return true if number is prime
-     */
-    private static boolean isPrime(int n) {
-        if (n < 2) {
-            return false;
-        }
-        if (n == 2) {
-            return true;
-        }
-        if (n % 2 == 0) {
-            return false;
-        }
-        for (int d = 3; d * d <= n; d += 2) {
-            if (n % d == 0) return false;
-        }
-        return true;
+        PrimeDetector pd = new PrimeDetector(msg);
+        String pdResult = pd.findComposite();
+        out.print(pdResult);
     }
 }
