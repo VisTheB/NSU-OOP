@@ -167,6 +167,7 @@ public class Worker {
     private void handleTask(String msg) {
         PrimeDetector pd = new PrimeDetector(msg);
         String pdResult = pd.findComposite();
-        out.print(pdResult);
+        System.out.println(pdResult);
+        out.println(pdResult);
     }
 }

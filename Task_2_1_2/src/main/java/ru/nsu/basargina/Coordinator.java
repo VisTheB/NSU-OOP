@@ -14,9 +14,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 /**
@@ -39,8 +47,12 @@ public class Coordinator {
     private final Path inputFile;
     private final List<WorkerHandler> workers = Collections.synchronizedList(new ArrayList<>());
     private final ExecutorService clientPool = Executors.newCachedThreadPool();
-    // Queue for the results from the workers
-    private static final BlockingQueue<Boolean> resultQueue = new LinkedBlockingQueue<>();
+    // Queue for tasks for workers
+    private static final BlockingQueue<TaskDescriptor> pendingTasks = new LinkedBlockingQueue<>();
+    // Flag that composite number has been found
+    private static final AtomicBoolean compositeFound = new AtomicBoolean(false);
+    private static final AtomicInteger remainingTasks = new AtomicInteger(0);
+    private static final Object finishLock = new Object();
     private final int[] data;
 
     /**
@@ -76,8 +88,7 @@ public class Coordinator {
                 case "--udp" -> udp = Integer.parseInt(args[++i]);
                 case "--expected" -> exp = Integer.parseInt(args[++i]);
                 case "--input" -> inputFile = Paths.get(args[++i]);
-                default -> {
-                }
+                default -> throw new IllegalArgumentException("Unknown arg: " + args[i]);
             }
         }
 
@@ -102,7 +113,7 @@ public class Coordinator {
                 .mapToInt(Integer::parseInt)) {
             return ints.toArray();
         } catch (IOException e) {
-            System.out.println("Something went wrong while reading from file." + e.getMessage());
+            System.err.println("Something went wrong while reading from file." + e.getMessage());
         }
         return new int[0];
     }
@@ -133,11 +144,14 @@ public class Coordinator {
                 clientPool.submit(wh);
             }
             System.out.println("All workers have connected. Distributing tasks...");
-            distributeTasks();
-            waitTasksCompletion();
         } catch (IOException e) {
-            System.out.println("Something went wrong while opening tcp socket." + e.getMessage());
+            System.err.println("Something went wrong while opening tcp socket." + e.getMessage());
         }
+        distributeTasks();
+
+        waitTasksCompletion();
+
+        workers.forEach(WorkerHandler::sendShutdown);
         clientPool.shutdown();
     }
 
@@ -171,16 +185,17 @@ public class Coordinator {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong while udp discovering." + e.getMessage());
+            System.err.println("Something went wrong while udp discovering." + e.getMessage());
         }
     }
 
     /**
-     * Divides the array into equal fragments and sends them to the workers.
+     * Divides the array into equal fragments and adds them to tasks queue.
      */
     private void distributeTasks() {
         // dividing array by the number of workers
         int workersCnt = workers.size();
+        remainingTasks.set(workersCnt);
         int chunk = (data.length + workersCnt - 1) / workersCnt;
 
         for (int i = 0; i < workersCnt; i++) {
@@ -192,34 +207,40 @@ public class Coordinator {
 
             int[] fragment = Arrays.copyOfRange(data, start, end);
             UUID taskId = UUID.randomUUID();
-            workers.get(i).sendTask(taskId, fragment);
+            TaskDescriptor newTask = new TaskDescriptor(taskId, fragment);
+            pendingTasks.add(newTask);
         }
     }
 
     /**
-     * Collects responses and as soon as false is received,
-     * sends SHUTDOWN and shuts down.
+     * Waits until composite is found or there aren't any tasks left.
      */
     private void waitTasksCompletion() {
-        try {
-            boolean allPrime = true;
-            int received = 0;
-            while (received < workers.size()) {
-                boolean partPrime = resultQueue.take();
-                received++;
-                if (!partPrime) {
-                    allPrime = false;
-                    break;
+        synchronized (finishLock) {
+            while (!compositeFound.get() && remainingTasks.get() > 0) {
+                try {
+                    finishLock.wait();
+                } catch (InterruptedException e) {
+                    System.err.println("Waiting for tasks completion has been interrupted.");
+                    Thread.currentThread().interrupt();
                 }
             }
-            System.out.printf("Result: array %s contains only prime numbers%n",
-                    allPrime ? "" : "doesn't");
-        } catch (InterruptedException e) {
-            System.out.println("Waiting for tasks completion has been interrupted.");
-            Thread.currentThread().interrupt();
         }
 
-        workers.forEach(WorkerHandler::sendShutdown);
+        if (compositeFound.get()) {
+            System.out.println("Result: array doesn't contain only prime numbers");
+        } else {
+            System.out.println("Result: array contains only prime numbers");
+        }
+    }
+
+    /**
+     * Record class for creating tasks.
+     *
+     * @param id task id
+     * @param numbers array of numbers to check
+     */
+    private record TaskDescriptor(UUID id, int[] numbers) {
     }
 
     /**
@@ -233,8 +254,7 @@ public class Coordinator {
         private final Socket socket;
         private final BufferedReader in;
         private final PrintWriter out;
-        //Flag that a composite number has already been found
-        private final AtomicBoolean finished = new AtomicBoolean(false);
+        private TaskDescriptor currentTask;
 
         /**
          * Create worker handler.
@@ -280,7 +300,9 @@ public class Coordinator {
         /**
          * The main working process.
          * - Reads HELLO = responds with ACK
-         * - Waits for RESULT and puts the result in the queue
+         * - Waits for the task and then compute it
+         * - If RESULT the notifies coordinator and sets flag
+         * - If worker crashed his task will be put back to the tasks queue.
          */
         @Override
         public void run() {
@@ -291,22 +313,47 @@ public class Coordinator {
                         + ": " + hello);
                 out.println("ACK");
 
-                String line;
-                while ((line = in.readLine()) != null) {
-                    if (finished.get()) {
-                        break;
+                while (!compositeFound.get()) {
+                    currentTask = pendingTasks.take();
+
+                    sendTask(currentTask.id, currentTask.numbers);
+
+                    String line = in.readLine();
+                    System.out.println(line);
+                    if (line == null) {
+                        throw new IOException("Connection closed");
                     }
+
                     if (line.startsWith("RESULT")) {
-                        // RESULT taskId true|false
                         boolean partPrime = Boolean.parseBoolean(line.split(" ")[2]);
-                        resultQueue.offer(partPrime);
-                        finished.set(true);
-                        break;
+                        if (!partPrime) {
+                            compositeFound.set(true);
+                        }
+                        remainingTasks.decrementAndGet();
+                        // Wake up coordinator
+                        synchronized (finishLock) {
+                            finishLock.notifyAll();
+                        }
                     }
                 }
-            } catch (IOException e) {
-                System.out.println("Something went wrong while reading/printing socket."
-                        + e.getMessage());
+            } catch (IOException | InterruptedException e) {
+                System.err.println(
+                        "Worker " + socket.getRemoteSocketAddress()
+                                + " failed on task "
+                                + (currentTask != null ? currentTask.id : "none")
+                                + "; requeueing...");
+                if (currentTask != null && !compositeFound.get()) {
+                    pendingTasks.add(currentTask);
+                    synchronized (finishLock) {
+                        finishLock.notifyAll();
+                    }
+                }
+            } finally {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    System.err.println("Something went wrong while closing worker socket.");
+                }
             }
         }
     }

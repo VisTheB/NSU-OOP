@@ -23,24 +23,25 @@ public class PrimeDetector {
      * @return if composite number has been found, break and return string with result and taskId
      */
     public String findComposite() {
-        StringTokenizer st = new StringTokenizer(this.task);
+        StringTokenizer st = new StringTokenizer(task);
         st.nextToken(); // "TASK"
         String taskId = st.nextToken();
-
+        System.out.println("pd 1");
         boolean allPrime = true;
 
         while (st.hasMoreTokens()) {
             int n = Integer.parseInt(st.nextToken());
+            System.out.println("pd n " + n);
             if (!isPrime(n)) {
                 allPrime = false;
                 break;
             }
         }
-
+        System.out.println("pd 2");
         if (allPrime) {
-            return "RESULT " + taskId + " true%n";
+            return "RESULT " + taskId + " true";
         } else {
-            return "RESULT " + taskId +  " false%n";
+            return "RESULT " + taskId +  " false";
         }
     }
 
