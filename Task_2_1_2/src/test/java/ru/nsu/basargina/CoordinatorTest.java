@@ -9,11 +9,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Test;
 
 /**
  * Class with tests.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CoordinatorTest {
     private PrintStream original;
     private ByteArrayOutputStream buf;
@@ -31,7 +35,7 @@ class CoordinatorTest {
         System.out.println(buf.toString());
     }
 
-    @Test
+    @Test @Order(1)
     void testAllPrimes() throws Exception {
         int tcpPort = 9000;
         int udpPort = 9999;
@@ -43,7 +47,7 @@ class CoordinatorTest {
         );
     }
 
-    @Test
+    @Test @Order(2)
     void testHasComposite() throws Exception {
         int tcpPort = 9001;
         int udpPort = 9998;

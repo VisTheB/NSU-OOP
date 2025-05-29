@@ -337,7 +337,6 @@ public class Coordinator {
                     }
                 }
             } catch (IOException | InterruptedException e) {
-                System.out.println(e.getMessage());
                 System.err.println(
                         "Worker " + socket.getRemoteSocketAddress()
                                 + " failed on task "
@@ -349,7 +348,6 @@ public class Coordinator {
                         finishLock.notifyAll();
                     }
                 }
-                Thread.currentThread().interrupt();
             } finally {
                 try {
                     socket.close();
