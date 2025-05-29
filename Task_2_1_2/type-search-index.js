@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.basargina","l":"Coordinator"},{"p":"ru.nsu.basargina","l":"PrimeDetector"},{"p":"ru.nsu.basargina","l":"Worker"}];updateSearchResults();
