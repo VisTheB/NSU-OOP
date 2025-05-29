@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -25,10 +26,10 @@ import java.util.UUID;
  * if there is at least one composite one.
  * Usage:
  * javac src/main/java/ru/nsu/basargina/Worker.java
- * java -cp src/main/java ru.nsu.basargina.Worker
+ * java -cp src/main/java ru.nsu.basargina.Worker --upd 9999
  */
 public class Worker {
-    private static final int DISCOVERY_PORT = 9999;
+    private static int DISCOVERY_PORT;
     private static final String DISCOVER_MSG = "DISCOVER_PRIME";
     private static final int DISCOVERY_ATTEMPTS = 5;
     private static final int UDP_TIMEOUT_MS = 2000;
@@ -40,12 +41,20 @@ public class Worker {
     private final byte[] udpBuffer = DISCOVER_MSG.getBytes(StandardCharsets.UTF_8);
 
     /**
-     * Main method. Launches worker with cli args.
+     * Main method. Launches worker with udp port from cli args.
      *
      * @param args cli arguments
      */
     public static void main(String[] args) {
         try {
+            DISCOVERY_PORT = 9999;
+            for (int i = 0; i < args.length; i++) {
+                if (args[i].equals("--udp")) {
+                    DISCOVERY_PORT = Integer.parseInt(args[++i]);
+                } else {
+                    throw new IllegalArgumentException("Unknown arg: " + args[i]);
+                }
+            }
             new Worker().start();
         } catch (Exception e) {
             System.err.println("Worker terminated: " + e.getMessage());
@@ -149,7 +158,7 @@ public class Worker {
             if (line.startsWith("TASK")) {
                 handleTask(line);
             } else if (line.startsWith("SHUTDOWN")) {
-                System.out.println("SHUTDOWN received. Bye!");
+                System.out.println("SHUTDOWN received. Bye! " + workerId);
                 break;
             } else {
                 System.err.println("Unknown message: " + line);
@@ -167,7 +176,6 @@ public class Worker {
     private void handleTask(String msg) {
         PrimeDetector pd = new PrimeDetector(msg);
         String pdResult = pd.findComposite();
-        System.out.println(pdResult);
         out.println(pdResult);
     }
 }

@@ -26,18 +26,15 @@ public class PrimeDetector {
         StringTokenizer st = new StringTokenizer(task);
         st.nextToken(); // "TASK"
         String taskId = st.nextToken();
-        System.out.println("pd 1");
         boolean allPrime = true;
 
         while (st.hasMoreTokens()) {
             int n = Integer.parseInt(st.nextToken());
-            System.out.println("pd n " + n);
             if (!isPrime(n)) {
                 allPrime = false;
                 break;
             }
         }
-        System.out.println("pd 2");
         if (allPrime) {
             return "RESULT " + taskId + " true";
         } else {

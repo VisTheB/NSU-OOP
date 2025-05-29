@@ -152,6 +152,7 @@ public class Coordinator {
         waitTasksCompletion();
 
         workers.forEach(WorkerHandler::sendShutdown);
+        System.out.println("Turned workers off");
         clientPool.shutdown();
     }
 
@@ -319,7 +320,6 @@ public class Coordinator {
                     sendTask(currentTask.id, currentTask.numbers);
 
                     String line = in.readLine();
-                    System.out.println(line);
                     if (line == null) {
                         throw new IOException("Connection closed");
                     }
@@ -337,6 +337,7 @@ public class Coordinator {
                     }
                 }
             } catch (IOException | InterruptedException e) {
+                System.out.println(e.getMessage());
                 System.err.println(
                         "Worker " + socket.getRemoteSocketAddress()
                                 + " failed on task "
@@ -348,6 +349,7 @@ public class Coordinator {
                         finishLock.notifyAll();
                     }
                 }
+                Thread.currentThread().interrupt();
             } finally {
                 try {
                     socket.close();
