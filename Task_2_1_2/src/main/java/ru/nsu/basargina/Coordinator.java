@@ -1,8 +1,8 @@
 package ru.nsu.basargina;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.DatagramPacket;
@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -61,7 +61,7 @@ public class Coordinator {
      * @param tcpPort tcp port for message exchanging
      * @param udpPort udp port to find workers using broadcast
      * @param expectedWorkers expected amount of connected workers
-     * @param inputFile input file with numbers
+     * @param inputFile input file with numbers.
      */
     private Coordinator(int tcpPort, int udpPort, int expectedWorkers, Path inputFile) {
         this.tcpPort = tcpPort;

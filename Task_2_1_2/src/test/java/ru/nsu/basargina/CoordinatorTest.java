@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Class with tests.
  */
-class ClusterIntegrationTest {
+class CoordinatorTest {
     private PrintStream original;
     private ByteArrayOutputStream buf;
 
@@ -22,7 +22,7 @@ class ClusterIntegrationTest {
     void setup() throws IOException {
         original = System.out;
         buf = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(buf, true, original.charset()));
+        System.setOut(new PrintStream(buf));
     }
 
     @AfterEach
@@ -73,7 +73,7 @@ class ClusterIntegrationTest {
                 Coordinator.main(new String[]{
                         "--port", String.valueOf(tcpPort),
                         "--udp", String.valueOf(udpPort),
-                        "--expected","2",
+                        "--expected", "2",
                         "--input", String.valueOf(file)
                 });
             } catch (Exception e) {
