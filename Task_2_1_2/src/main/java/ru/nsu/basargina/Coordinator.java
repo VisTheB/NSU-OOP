@@ -314,7 +314,7 @@ public class Coordinator {
                         + ": " + hello);
                 out.println("ACK");
 
-                while (!compositeFound.get()) {
+                while (!compositeFound.get() && remainingTasks.get() > 0) {
                     currentTask = pendingTasks.take();
 
                     sendTask(currentTask.id, currentTask.numbers);

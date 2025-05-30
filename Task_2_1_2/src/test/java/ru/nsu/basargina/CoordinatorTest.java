@@ -11,8 +11,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * Class with tests.
@@ -35,7 +35,8 @@ class CoordinatorTest {
         System.out.println(buf.toString());
     }
 
-    @Test @Order(1)
+    @Test
+    @Order(1)
     void testAllPrimes() throws Exception {
         int tcpPort = 9000;
         int udpPort = 9999;
@@ -45,9 +46,11 @@ class CoordinatorTest {
                 tcpPort,
                 udpPort
         );
+        Thread.sleep(2000);
     }
 
-    @Test @Order(2)
+    @Test
+    @Order(2)
     void testHasComposite() throws Exception {
         int tcpPort = 9001;
         int udpPort = 9998;
@@ -57,6 +60,7 @@ class CoordinatorTest {
                 tcpPort,
                 udpPort
         );
+        Thread.sleep(2000);
     }
 
     /**
@@ -65,8 +69,8 @@ class CoordinatorTest {
      * @param inputPath path to input file
      * @param expected expected result
      * @param tcpPort coordinator tcp port
-     * @param udpPort udp port
-     * @throws InterruptedException if thread was interrupted
+     * @param udpPort udp port.
+     * @throws InterruptedException if thread was interrupted.
      */
     private void runTest(String inputPath, String expected, int tcpPort, int udpPort)
             throws InterruptedException {
@@ -102,6 +106,8 @@ class CoordinatorTest {
         w2.start();
 
         coord.join();
+        w1.join();
+        w2.join();
 
         String log = buf.toString();
         assertTrue(log.contains(expected));
